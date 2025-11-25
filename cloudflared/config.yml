@@ -1,0 +1,7 @@
+tunnel: 59bae283-7b1e-40c9-a50c-c80b366b2410
+credentials-file: C:\Users\123\.cloudflared\59bae283-7b1e-40c9-a50c-c80b366b2410.json
+
+ingress:
+  - hostname: personal.daidataly.online
+    service: http://localhost:4000
+  - service: http_status:404
