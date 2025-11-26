@@ -8,12 +8,22 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
 import { useState } from "react"
-import { api, ContactFormData } from "@/lib/api"
+import emailjs from '@emailjs/browser'
+import { EMAILJS_CONFIG, isEmailJsConfigured } from "@/lib/emailjs.config"
+
+interface ContactFormData {
+    name: string
+    email: string
+    phone: string
+    subject: string
+    message: string
+}
 
 export function Contact() {
     const [formData, setFormData] = useState<ContactFormData>({
         name: "",
         email: "",
+        phone: "",
         subject: "",
         message: ""
     })
@@ -28,24 +38,53 @@ export function Contact() {
         setIsSubmitting(true)
         setSubmitStatus({ type: null, message: '' })
 
-        const result = await api.submitContact(formData)
-
-        if (result.error) {
+        // Check if EmailJS is configured
+        if (!isEmailJsConfigured()) {
             setSubmitStatus({
                 type: 'error',
-                message: result.error
+                message: 'EmailJS chưa được cấu hình. Vui lòng liên hệ quản trị viên.'
             })
-        } else {
+            setIsSubmitting(false)
+            return
+        }
+
+        try {
+            // Send email using EmailJS
+            const result = await emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    phone: formData.phone,
+                    subject: formData.subject,
+                    message: formData.message,
+                    to_email: 'trantuandai2508@gmail.com'
+                },
+                EMAILJS_CONFIG.publicKey
+            )
+
+            if (result.status === 200) {
+                setSubmitStatus({
+                    type: 'success',
+                    message: 'Cảm ơn bạn đã liên hệ! Tôi sẽ phản hồi sớm nhất có thể.'
+                })
+                // Reset form
+                setFormData({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    subject: "",
+                    message: ""
+                })
+            } else {
+                throw new Error('Failed to send email')
+            }
+        } catch (error) {
+            console.error('EmailJS Error:', error)
             setSubmitStatus({
-                type: 'success',
-                message: 'Cảm ơn bạn đã liên hệ! Tôi sẽ phản hồi sớm nhất có thể.'
-            })
-            // Reset form
-            setFormData({
-                name: "",
-                email: "",
-                subject: "",
-                message: ""
+                type: 'error',
+                message: 'Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại sau.'
             })
         }
 
@@ -92,7 +131,7 @@ export function Contact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold">Email</h4>
-                                    <p className="text-muted-foreground">contact@trantuandai.com</p>
+                                    <p className="text-muted-foreground">trantuandai2508@gmail.com</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -101,7 +140,7 @@ export function Contact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold">Phone</h4>
-                                    <p className="text-muted-foreground">+84 123 456 789</p>
+                                    <p className="text-muted-foreground">+84 931 368 921</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -148,6 +187,19 @@ export function Contact() {
                                         />
                                     </div>
                                     <div className="space-y-2">
+                                        <label className="text-sm font-medium">Số điện thoại</label>
+                                        <Input
+                                            type="tel"
+                                            name="phone"
+                                            placeholder="Nhập số điện thoại của bạn"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            required
+                                            pattern="[0-9]{10,11}"
+                                            title="Vui lòng nhập số điện thoại hợp lệ (10-11 số)"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
                                         <label className="text-sm font-medium">Chủ đề</label>
                                         <Input
                                             type="text"
@@ -174,8 +226,8 @@ export function Contact() {
 
                                     {submitStatus.type && (
                                         <div className={`p-4 rounded-lg ${submitStatus.type === 'success'
-                                                ? 'bg-green-500/10 text-green-500 border border-green-500/20'
-                                                : 'bg-red-500/10 text-red-500 border border-red-500/20'
+                                            ? 'bg-green-500/10 text-green-500 border border-green-500/20'
+                                            : 'bg-red-500/10 text-red-500 border border-red-500/20'
                                             }`}>
                                             {submitStatus.message}
                                         </div>

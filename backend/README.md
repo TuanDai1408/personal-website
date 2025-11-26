@@ -4,7 +4,7 @@ Backend API for Personal Website built with FastAPI and Python.
 
 ## 📋 Features
 
-- ✅ Contact form submission API
+- ✅ Contact form submission API with email notifications
 - ✅ Newsletter subscription management
 - ✅ Health check endpoint
 - ✅ SQLite database with async support
@@ -89,7 +89,49 @@ DATABASE_URL=sqlite+aiosqlite:///./data/app.db
 # CORS
 FRONTEND_URL=http://localhost:4000
 ALLOWED_ORIGINS=http://localhost:4000,https://your-domain.pages.dev
+
+# Email (Optional - for contact form notifications)
+ENABLE_EMAIL=True
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-gmail-app-password
+EMAIL_FROM=Personal Website <noreply@daidataly.online>
+EMAIL_TO=trantuandai2508@gmail.com
 ```
+
+### Email Configuration (Gmail)
+
+To enable email notifications for contact form submissions:
+
+1. **Enable 2-Factor Authentication** on your Gmail account
+   - Go to [Google Account Security](https://myaccount.google.com/security)
+   - Enable 2-Step Verification
+
+2. **Create App Password**
+   - Go to [App Passwords](https://myaccount.google.com/apppasswords)
+   - Select "Mail" and your device
+   - Copy the generated 16-character password
+
+3. **Update `.env` file**
+   ```env
+   ENABLE_EMAIL=True
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASSWORD=xxxx xxxx xxxx xxxx  # Gmail App Password
+   ```
+
+4. **Test email sending**
+   - Submit a contact form from your website
+   - Check if email arrives at `trantuandai2508@gmail.com`
+
+#### Alternative Email Services
+
+Instead of Gmail, you can use:
+- **SendGrid**: Free tier (100 emails/day)
+- **Resend**: Free tier (100 emails/day, 3,000/month)  
+- **Mailgun**: Free tier (5,000 emails/month)
+
+Update SMTP settings accordingly in `.env` file.
 
 ## 🌐 Cloudflare Tunnel Deployment
 

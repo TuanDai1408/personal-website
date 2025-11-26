@@ -8,12 +8,12 @@ import { useState, useEffect } from "react"
 
 const testimonials = [
     {
-        name: "Nguyen Van A",
+        name: "Nguyen Van Hung",
         role: "CEO at TechCorp",
         content: "Dai is an exceptional engineer. His ability to automate complex workflows saved us hundreds of hours.",
     },
     {
-        name: "Le Thi B",
+        name: "Le Thi Bich Ngoc",
         role: "Marketing Director",
         content: "The data pipelines Dai built gave us real-time insights that completely changed our marketing strategy.",
     },

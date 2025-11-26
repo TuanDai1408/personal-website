@@ -70,9 +70,18 @@ export function FireworksSection() {
                     transition={{ delay: 1 }}
                     className="flex flex-col sm:flex-row gap-4 justify-center"
                 >
-                    <Button size="lg" className="bg-white text-black hover:bg-white/90">
+                    {/* <Button size="lg" className="bg-white text-black hover:bg-white/90" onClick={() => {
+                        window.location.href = "http://localhost:4000/#contact";
+                    }}>
                         <Share2 className="mr-2 w-4 h-4" /> Gửi lời chúc
-                    </Button>
+                    </Button> */}
+
+                    <Link href="/#contact" scroll={true}>
+                        <Button size="lg" className="bg-white text-black hover:bg-white/90">
+                            <Share2 className="mr-2 w-4 h-4" /> Gửi lời chúc
+                        </Button>
+                    </Link>
+
                     <Link href="/">
                         <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/10 w-full">
                             <Home className="mr-2 w-4 h-4" /> Quay về trang chủ

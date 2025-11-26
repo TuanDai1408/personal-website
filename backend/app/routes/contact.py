@@ -4,6 +4,10 @@ from sqlalchemy import select
 from app.database import get_db
 from app.models.contact import Contact
 from app.schemas import ContactCreate, ContactResponse
+from app.email_service import send_contact_email
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/contact", tags=["contact"])
 
@@ -32,6 +36,21 @@ async def create_contact(
     db.add(contact)
     await db.commit()
     await db.refresh(contact)
+    
+    # Send email notification (don't fail if email fails)
+    try:
+        email_sent = await send_contact_email(
+            name=contact_data.name,
+            email=contact_data.email,
+            subject=contact_data.subject,
+            message=contact_data.message
+        )
+        if email_sent:
+            logger.info(f"Contact form email sent for submission from {contact_data.email}")
+        else:
+            logger.warning(f"Email not sent for contact form submission from {contact_data.email}")
+    except Exception as e:
+        logger.error(f"Error sending contact email: {str(e)}")
     
     return contact
 

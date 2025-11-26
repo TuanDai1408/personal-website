@@ -66,15 +66,32 @@ export function BirthdayGate({ onEnter }: BirthdayGateProps) {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                        <Input
-                            type="date"
+                        {/* <Input
+                            type="text"
                             value={date}
+                            placeholder="Nhập ngày sinh của bạn"
+                            onChange={(e) => {
+                                setDate(e.target.value)
+                                setError("")
+                            }}
+                            className="bg-secondary/50 border-white/10 text-lg py-6 text-center"
+                        /> */}
+
+                        <Input
+                            type="text"
+                            placeholder="Chọn ngày sinh của bạn"
+                            value={date}
+                            onFocus={(e) => (e.target.type = "date")}
+                            onBlur={(e) => {
+                                if (!date) e.target.type = "text"
+                            }}
                             onChange={(e) => {
                                 setDate(e.target.value)
                                 setError("")
                             }}
                             className="bg-secondary/50 border-white/10 text-lg py-6 text-center"
                         />
+
                         {error && (
                             <p className="text-red-500 text-sm text-center animate-pulse">
                                 {error}

@@ -14,8 +14,9 @@ python-dotenv==1.0.1
 # Form and File Handling
 python-multipart==0.0.20
 
-# Email (Optional - for notifications)
-python-jose[cryptography]==3.3.0
+# Email (for notifications)
+aiosmtplib==3.0.2
+email-validator==2.2.0
 
 # CORS and Security
 python-dateutil==2.9.0.post0

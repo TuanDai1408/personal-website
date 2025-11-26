@@ -9,7 +9,7 @@ const skills = [
         items: [
             { name: "BigQuery", level: 90 },
             { name: "Kafka", level: 85 },
-            { name: "Spark", level: 80 },
+            { name: "Spark", level: 60 },
             { name: "ETL/ELT", level: 95 },
             { name: "Dagster", level: 85 },
         ],
@@ -19,14 +19,14 @@ const skills = [
         items: [
             { name: "Python", level: 95 },
             { name: "SQL", level: 90 },
-            { name: "Airflow API", level: 85 },
-            { name: "Automation", level: 90 },
+            { name: "Airflow API", level: 65 },
+            { name: "Automation", level: 60 },
         ],
     },
     {
         category: "Marketing & Analytics",
         items: [
-            { name: "GA4", level: 90 },
+            { name: "GA4", level: 60 },
             { name: "Tracking", level: 85 },
             { name: "Attribution", level: 80 },
             { name: "Segmentation", level: 85 },

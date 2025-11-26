@@ -50,7 +50,7 @@ export function Hero() {
                         Trần Tuấn <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-blue">Đại</span>
                     </h1>
                     <div className="text-base md:text-xl lg:text-2xl text-muted-foreground mb-8 min-h-[60px]">
-                        <TypingEffect text="Data Engineer • Marketing Analyst • AI Automator" />
+                        <TypingEffect text="Data Management • Transform Data • AI Automation" />
                         <span className="animate-pulse">|</span>
                     </div>
                     <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-lg">
@@ -66,7 +66,7 @@ export function Hero() {
                         </Button>
                     </div>
 
-                    <div className="mt-12 flex gap-6">
+                    {/* <div className="mt-12 flex gap-6">
                         {[Facebook, Github, Linkedin].map((Icon, i) => (
                             <a
                                 key={i}
@@ -76,7 +76,29 @@ export function Hero() {
                                 <Icon className="h-6 w-6 text-muted-foreground group-hover:text-neon-blue transition-colors" />
                             </a>
                         ))}
+                    </div> */}
+                    <div className="mt-12 flex gap-6">
+                        {[Facebook, Github, Linkedin].map((Icon, i) => {
+                            const links = [
+                                "https://www.facebook.com/tran.tuan.ai.835268/",
+                                "https://github.com/TuanDai1408",
+                                "http://pam-dagster.daidataly.online/jobs"
+                            ];
+
+                            return (
+                                <a
+                                    key={i}
+                                    href={links[i]}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-3 rounded-full border border-white/10 hover:border-neon-blue hover:shadow-[0_0_15px_rgba(0,212,255,0.5)] transition-all group"
+                                >
+                                    <Icon className="h-6 w-6 text-muted-foreground group-hover:text-neon-blue transition-colors" />
+                                </a>
+                            );
+                        })}
                     </div>
+
                 </motion.div>
 
                 <motion.div
@@ -90,7 +112,7 @@ export function Hero() {
                         <div className="absolute inset-0 bg-gradient-to-tr from-neon-purple to-neon-blue rounded-[2rem] rotate-6 opacity-20 blur-lg" />
                         <div className="absolute inset-0 bg-card/50 backdrop-blur-xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
                             <Image
-                                src="/avatar.png"
+                                src="/about_me/dai_avt.jpg"
                                 alt="Tran Tuan Dai Avatar"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 500px"

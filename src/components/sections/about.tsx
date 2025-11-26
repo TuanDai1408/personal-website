@@ -35,7 +35,7 @@ export function About() {
                                 <CardContent className="p-0">
                                     <div className="aspect-[4/5] relative">
                                         <Image
-                                            src="/about-image.png"
+                                            src="/about_me/about_me.jpg"
                                             alt="About Tran Tuan Dai"
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"

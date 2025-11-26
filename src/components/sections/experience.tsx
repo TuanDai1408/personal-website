@@ -7,15 +7,15 @@ import { Calendar, Briefcase } from "lucide-react"
 const experiences = [
     {
         year: "2023 - Present",
-        role: "Data Engineer",
-        company: "Company A",
+        role: "Data Management",
+        company: "Công ty Cổ Phần Dược Phẩm FPT Long Châu",
         description: "Xây dựng hệ thống Data Warehouse trên GCP, tối ưu hóa pipeline ETL với Dagster.",
     },
     {
-        year: "2021 - 2023",
-        role: "Marketing Analyst",
-        company: "Company B",
-        description: "Phân tích dữ liệu marketing, xây dựng dashboard báo cáo hiệu quả chiến dịch.",
+        year: "2022 - 2023",
+        role: "IT Engineer",
+        company: "Công ty Cổ phần Hạ Vàng",
+        description: "Xây dựng Website bán hàng và hệ thống quản lý bán hàng.",
     },
     {
         year: "2020 - 2021",

@@ -29,12 +29,14 @@ class Settings(BaseSettings):
         "https://www.daidataly.online",
     ]
     
-    # Email (Optional)
+    # Email Configuration
+    enable_email: bool = False  # Set to True when SMTP is configured
     smtp_host: str = "smtp.gmail.com"
     smtp_port: int = 587
-    smtp_user: str = ""
-    smtp_password: str = ""
-    email_from: str = "noreply@yourdomain.com"
+    smtp_user: str = ""  # Your Gmail address
+    smtp_password: str = ""  # Gmail App Password (not regular password)
+    email_from: str = "Personal Website <noreply@daidataly.online>"
+    email_to: str = "trantuandai2508@gmail.com"  # Recipient for contact form
     
     # Security
     api_secret_key: str = "dev-secret-key-change-in-production"

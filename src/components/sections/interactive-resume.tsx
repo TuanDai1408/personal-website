@@ -12,15 +12,15 @@ const resumeData = [
         icon: Briefcase,
         items: [
             {
-                role: "Senior Data Engineer",
-                company: "Tech Company A",
+                role: "Data Management",
+                company: "Công ty Cổ Phần Dược Phẩm FPT Long Châu",
                 period: "2023 - Present",
                 description: "Xây dựng hệ thống ETL xử lý 10TB+ dữ liệu/tháng. Tối ưu hóa chi phí BigQuery giảm 40%."
             },
             {
-                role: "Data Analyst",
-                company: "Marketing Agency B",
-                period: "2021 - 2023",
+                role: "IT Engineer",
+                company: "Công ty Cổ phần Hạ Vàng",
+                period: "2022 - 2023",
                 description: "Phân tích hiệu quả chiến dịch marketing, xây dựng dashboard Real-time cho khách hàng."
             }
         ]
@@ -31,10 +31,10 @@ const resumeData = [
         icon: GraduationCap,
         items: [
             {
-                role: "Cử nhân Khoa học Dữ liệu",
-                company: "University X",
-                period: "2017 - 2021",
-                description: "Tốt nghiệp loại Giỏi. GPA: 3.8/4.0"
+                role: "Kỉ sư Công nghệ thông tin",
+                company: "Đại học Công Nghệ Sài Gòn",
+                period: "2018 - 2022",
+                description: "Tốt nghiệp loại Khá. GPA: 3.1/4.0"
             }
         ]
     },
