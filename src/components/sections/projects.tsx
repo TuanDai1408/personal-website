@@ -190,9 +190,11 @@ export function Projects() {
                                         <Button className="bg-neon-blue hover:bg-neon-blue/80 text-black">
                                             <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
                                         </Button>
-                                        <Button variant="outline">
-                                            <Github className="mr-2 h-4 w-4" /> Source Code
-                                        </Button>
+                                        <a href="https://github.com/TuanDai1408/lc_coding_challenge_daitt5">
+                                            <Button variant="outline">
+                                                <Github className="mr-2 h-4 w-4" /> Source Code
+                                            </Button>
+                                        </a>
                                     </div>
                                 </div>
                             </motion.div>

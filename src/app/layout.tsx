@@ -12,7 +12,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Tran Tuan Dai | Data Engineer & AI Automator",
+  title: "Tran Tuan Dai | Data Management & AI Automator",
   description: "Portfolio of Tran Tuan Dai - Data Engineer, Marketing Analyst, and AI Automator.",
 };
 

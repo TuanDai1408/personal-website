@@ -131,9 +131,11 @@ export function InteractiveResume() {
                 </div>
 
                 <div className="mt-12 text-center">
-                    <Button size="lg" className="bg-neon-blue hover:bg-neon-blue/80 text-black font-bold">
-                        <Download className="mr-2 h-4 w-4" /> Tải CV đầy đủ (PDF)
-                    </Button>
+                    <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf">
+                        <Button size="lg" className="bg-neon-blue hover:bg-neon-blue/80 text-black font-bold">
+                            <Download className="mr-2 h-4 w-4" /> Tải CV đầy đủ (PDF)
+                        </Button>
+                    </a>
                 </div>
             </div>
         </section>

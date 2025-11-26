@@ -61,9 +61,11 @@ export function Hero() {
                         <Button size="lg" className="bg-neon-purple hover:bg-neon-purple/80 text-white border-none shadow-[0_0_20px_rgba(176,38,255,0.3)]">
                             Xem Dự Án <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
-                        <Button size="lg" variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10">
-                            Tải CV <Download className="ml-2 h-4 w-4" />
-                        </Button>
+                        <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf">
+                            <Button size="lg" variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10">
+                                Tải CV <Download className="ml-2 h-4 w-4" />
+                            </Button>
+                        </a>
                     </div>
 
                     {/* <div className="mt-12 flex gap-6">

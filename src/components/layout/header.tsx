@@ -59,9 +59,11 @@ export function Header() {
                         </Link>
                     ))}
                     <ThemeToggle />
-                    <Button size="sm" className="bg-neon-purple hover:bg-neon-purple/80 text-white border-none">
-                        Tải CV
-                    </Button>
+                    <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf">
+                        <Button size="sm" className="bg-neon-purple hover:bg-neon-purple/80 text-white border-none">
+                            Tải CV
+                        </Button>
+                    </a>
                 </nav>
 
                 {/* Mobile Menu Toggle */}
@@ -93,7 +95,9 @@ export function Header() {
                                 {item.name}
                             </Link>
                         ))}
-                        <Button className="w-full bg-neon-purple text-white">Tải CV</Button>
+                        <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf" className="w-full">
+                            <Button className="w-full bg-neon-purple text-white">Tải CV</Button>
+                        </a>
                     </nav>
                 </motion.div>
             )}
