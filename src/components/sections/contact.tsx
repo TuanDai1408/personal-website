@@ -7,12 +7,57 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
-
-// Missing Input and Textarea components, I'll define simple versions here or create them.
-// I'll create them properly in the next step if needed, but for now I can inline or use standard HTML with classes.
-// Actually, let's create them properly in `ui` folder after this, but for now I'll use standard HTML elements styled with Tailwind.
+import { useState } from "react"
+import { api, ContactFormData } from "@/lib/api"
 
 export function Contact() {
+    const [formData, setFormData] = useState<ContactFormData>({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+    })
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState<{
+        type: 'success' | 'error' | null
+        message: string
+    }>({ type: null, message: '' })
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setIsSubmitting(true)
+        setSubmitStatus({ type: null, message: '' })
+
+        const result = await api.submitContact(formData)
+
+        if (result.error) {
+            setSubmitStatus({
+                type: 'error',
+                message: result.error
+            })
+        } else {
+            setSubmitStatus({
+                type: 'success',
+                message: 'Cảm ơn bạn đã liên hệ! Tôi sẽ phản hồi sớm nhất có thể.'
+            })
+            // Reset form
+            setFormData({
+                name: "",
+                email: "",
+                subject: "",
+                message: ""
+            })
+        }
+
+        setIsSubmitting(false)
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+    }
     return (
         <Section id="contact">
             <div className="container">
@@ -72,35 +117,78 @@ export function Contact() {
                     </motion.div>
 
                     <motion.div
+                        initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
                         <Card className="bg-card/50 border-white/10 backdrop-blur-sm">
                             <CardContent className="p-8 space-y-6">
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium">Họ và tên</label>
-                                    <Input
-                                        type="text"
-                                        placeholder="Nhập họ tên của bạn"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium">Email</label>
-                                    <Input
-                                        type="email"
-                                        placeholder="Nhập email của bạn"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium">Nội dung</label>
-                                    <Textarea
-                                        placeholder="Bạn muốn trao đổi về vấn đề gì?"
-                                        className="min-h-[120px]"
-                                    />
-                                </div>
-                                <Button className="w-full bg-gradient-to-r from-neon-purple to-neon-blue text-white border-none hover:opacity-90">
-                                    Gửi Tin Nhắn <Send className="ml-2 h-4 w-4" />
-                                </Button>
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium">Họ và tên</label>
+                                        <Input
+                                            type="text"
+                                            name="name"
+                                            placeholder="Nhập họ tên của bạn"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            minLength={2}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium">Email</label>
+                                        <Input
+                                            type="email"
+                                            name="email"
+                                            placeholder="Nhập email của bạn"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium">Chủ đề</label>
+                                        <Input
+                                            type="text"
+                                            name="subject"
+                                            placeholder="Chủ đề tin nhắn"
+                                            value={formData.subject}
+                                            onChange={handleChange}
+                                            required
+                                            minLength={3}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium">Nội dung</label>
+                                        <Textarea
+                                            name="message"
+                                            placeholder="Bạn muốn trao đổi về vấn đề gì?"
+                                            className="min-h-[120px]"
+                                            value={formData.message}
+                                            onChange={handleChange}
+                                            required
+                                            minLength={10}
+                                        />
+                                    </div>
+
+                                    {submitStatus.type && (
+                                        <div className={`p-4 rounded-lg ${submitStatus.type === 'success'
+                                                ? 'bg-green-500/10 text-green-500 border border-green-500/20'
+                                                : 'bg-red-500/10 text-red-500 border border-red-500/20'
+                                            }`}>
+                                            {submitStatus.message}
+                                        </div>
+                                    )}
+
+                                    <Button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full bg-gradient-to-r from-neon-purple to-neon-blue text-white border-none hover:opacity-90 disabled:opacity-50"
+                                    >
+                                        {isSubmitting ? 'Đang gửi...' : 'Gửi Tin Nhắn'} <Send className="ml-2 h-4 w-4" />
+                                    </Button>
+                                </form>
                             </CardContent>
                         </Card>
                     </motion.div>

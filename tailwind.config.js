@@ -7,6 +7,13 @@ module.exports = {
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     theme: {
+        container: {
+            center: true,
+            padding: "2rem",
+            screens: {
+                "2xl": "1400px",
+            },
+        },
         extend: {
             colors: {
                 background: "hsl(var(--background))",
@@ -53,6 +60,8 @@ module.exports = {
                     purple: "#b026ff",
                     blue: "#00d4ff",
                     green: "#00ff9d",
+                    pink: "#ff00ff",
+                    yellow: "#ffff00",
                 }
             },
             borderRadius: {
@@ -65,6 +74,8 @@ module.exports = {
                 "accordion-up": "accordion-up 0.2s ease-out",
                 "pulse-glow": "pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
                 "float": "float 6s ease-in-out infinite",
+                "spin-slow": "spin 10s linear infinite",
+                "bounce-slow": "bounce 3s infinite",
             },
             keyframes: {
                 "accordion-down": {
@@ -86,5 +97,5 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [require("tailwindcss-animate")],
 };

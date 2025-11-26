@@ -1,0 +1,24 @@
+# FastAPI and ASGI Server
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+
+# Database
+sqlalchemy==2.0.36
+aiosqlite==0.20.0
+
+# Configuration and Environment
+pydantic==2.10.3
+pydantic-settings==2.6.1
+python-dotenv==1.0.1
+
+# Form and File Handling
+python-multipart==0.0.20
+
+# Email (Optional - for notifications)
+python-jose[cryptography]==3.3.0
+
+# CORS and Security
+python-dateutil==2.9.0.post0
+
+# HTTP Client (for testing)
+httpx==0.28.1
