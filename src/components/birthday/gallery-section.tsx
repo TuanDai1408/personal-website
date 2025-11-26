@@ -2,14 +2,9 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { birthdayConfig } from "@/config/birthday"
 
-const photos = [
-    "/gallery/1.jpg", // Placeholder paths
-    "/gallery/2.jpg",
-    "/gallery/3.jpg",
-    "/gallery/4.jpg",
-    "/gallery/5.jpg"
-]
+const photos = birthdayConfig.images.gallery
 
 export function GallerySection() {
     return (
@@ -36,17 +31,12 @@ export function GallerySection() {
                             transition={{ duration: 0.3 }}
                             className={`relative aspect-[4/5] rounded-2xl overflow-hidden border-2 border-transparent hover:border-neon-blue hover:shadow-[0_0_20px_rgba(0,212,255,0.3)] transition-all ${index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}
                         >
-                            <div className="absolute inset-0 bg-secondary flex items-center justify-center text-muted-foreground">
-                                <span>Photo {index + 1}</span>
-                            </div>
-                            {/* Uncomment when real images are available
                             <Image
                                 src={src}
                                 alt={`Memory ${index + 1}`}
                                 fill
                                 className="object-cover"
                             />
-                            */}
                         </motion.div>
                     ))}
                 </div>

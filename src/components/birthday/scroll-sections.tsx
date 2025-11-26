@@ -3,13 +3,9 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 import { Flame } from "lucide-react"
+import { birthdayConfig } from "@/config/birthday"
 
-const wishes = [
-    "Chúc bạn tuổi mới thật nhiều niềm vui! 🎂",
-    "Sức khỏe dồi dào, vạn sự như ý! 🌟",
-    "Thành công rực rỡ trên mọi con đường! 🚀",
-    "Luôn xinh đẹp và hạnh phúc nhé! ❤️"
-]
+const wishes = birthdayConfig.messages
 
 export function ScrollSections() {
     const containerRef = useRef(null)

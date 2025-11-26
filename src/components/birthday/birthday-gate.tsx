@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Calendar, ArrowRight } from "lucide-react"
 
+import { birthdayConfig } from "@/config/birthday"
+
 interface BirthdayGateProps {
     onEnter: (date: Date) => void
 }
@@ -20,6 +22,20 @@ export function BirthdayGate({ onEnter }: BirthdayGateProps) {
             setError("Vui lòng chọn ngày sinh nhật của bạn!")
             return
         }
+
+        const enteredDate = new Date(date)
+        const configDate = new Date(birthdayConfig.date)
+
+        // Validate day and month
+        if (enteredDate.getDate() !== configDate.getDate() || enteredDate.getMonth() !== configDate.getMonth()) {
+            // For demo purposes, we might want to allow any date to enter the "Countdown" phase,
+            // but if we want to be strict about "Identity", we could check here.
+            // However, the prompt implies "personalization", so let's assume the user enters *their* birthday.
+            // If it matches today, they get celebration. If not, countdown.
+            // The logic in page.tsx handles the "is today" check.
+            // Here we just pass the date.
+        }
+
         onEnter(new Date(date))
     }
 

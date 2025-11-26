@@ -6,6 +6,7 @@ import confetti from "canvas-confetti"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Gift } from "lucide-react"
+import { birthdayConfig } from "@/config/birthday"
 
 export function BirthdayHero({ onOpenGift }: { onOpenGift: () => void }) {
     useEffect(() => {
@@ -68,8 +69,8 @@ export function BirthdayHero({ onOpenGift }: { onOpenGift: () => void }) {
                     <div className="absolute inset-1 bg-background rounded-full p-1">
                         <div className="w-full h-full rounded-full overflow-hidden relative">
                             <Image
-                                src="/avatar.png" // Ensure this exists or use a placeholder
-                                alt="Birthday Person"
+                                src={birthdayConfig.images.avatar}
+                                alt={birthdayConfig.name}
                                 fill
                                 className="object-cover"
                             />
@@ -110,7 +111,7 @@ export function BirthdayHero({ onOpenGift }: { onOpenGift: () => void }) {
                         transition={{ delay: 2.5 }}
                         className="text-xl md:text-2xl text-muted-foreground mt-4"
                     >
-                        Chúc bạn tuổi mới càng rực rỡ, thành công và hạnh phúc hơn nữa! 🎉
+                        Chúc {birthdayConfig.name} tuổi mới càng rực rỡ, thành công và hạnh phúc hơn nữa! 🎉
                     </motion.h2>
                 </div>
 
