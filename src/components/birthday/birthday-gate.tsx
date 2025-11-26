@@ -78,19 +78,17 @@ export function BirthdayGate({ onEnter }: BirthdayGateProps) {
                         /> */}
 
                         <Input
-                            type="text"
-                            placeholder="Chọn ngày sinh của bạn"
+                            type="date"
+                            required
                             value={date}
-                            onFocus={(e) => (e.target.type = "date")}
-                            onBlur={(e) => {
-                                if (!date) e.target.type = "text"
-                            }}
                             onChange={(e) => {
                                 setDate(e.target.value)
                                 setError("")
                             }}
-                            className="bg-secondary/50 border-white/10 text-lg py-6 text-center"
+                            className="bg-secondary/50 border-white/10 text-lg py-6 text-center w-full block"
                         />
+
+
 
                         {error && (
                             <p className="text-red-500 text-sm text-center animate-pulse">

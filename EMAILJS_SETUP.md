@@ -212,3 +212,24 @@ Once configured:
 4. ✅ Works on static hosting (Cloudflare Pages, Vercel, Netlify)
 
 **Happy emailing! 📧**
+
+---
+
+## Deploying to Cloudflare Pages
+
+Since EmailJS runs on the client side, you need to provide the environment variables to Cloudflare Pages so they can be embedded during the build process.
+
+1.  **Log in to Cloudflare Dashboard**
+2.  Go to **Workers & Pages** -> Select your project (`personal-website`)
+3.  Go to **Settings** -> **Environment variables**
+4.  Click **Add variable** (or "Edit variables" if some exist)
+5.  Add the following variables (copy values from your `.env.local`):
+    *   `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
+    *   `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
+    *   `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
+6.  Click **Save**
+7.  **Redeploy your project**:
+    *   Go to **Deployments** tab
+    *   Click **Create deployment** (or trigger a new build by pushing to GitHub)
+
+> **Note:** Environment variables in Cloudflare Pages are only available at build time for Next.js static generation. If you change them, you must rebuild/redeploy the site.
