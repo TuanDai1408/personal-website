@@ -16,8 +16,9 @@ async def lifespan(app: FastAPI):
     # Startup: Initialize database
     print("🚀 Starting up application...")
     
-    # Create data directory if it doesn't exist
-    os.makedirs("data", exist_ok=True)
+    # Create data directory if it doesn't exist and we are using SQLite
+    if settings.database_url.startswith("sqlite"):
+        os.makedirs("data", exist_ok=True)
     
     # Initialize database tables
     await init_db()
