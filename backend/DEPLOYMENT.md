@@ -305,3 +305,40 @@ Your backend is now deployed and accessible at:
 - Health: `https://api.your-domain.com/api/health`
 
 Frontend có thể call API qua domain này với SSL/HTTPS tự động từ Cloudflare!
+
+---
+
+## 🚀 Option 2: Deploy to Vercel (Recommended)
+
+Deploying to Vercel is easier and doesn't require managing a server or tunnel.
+
+### Prerequisites
+1.  **GitHub Account**: Your code must be on GitHub.
+2.  **Vercel Account**: Linked to your GitHub.
+3.  **Supabase Account**: For the PostgreSQL database.
+
+### Step 1: Setup Supabase Database
+1.  Create a new project on [Supabase](https://supabase.com/).
+2.  Go to **Project Settings** -> **Database**.
+3.  Under **Connection String**, select **URI**.
+4.  Copy the connection string. It looks like:
+    `postgresql://postgres.your-ref:password@aws-0-region.pooler.supabase.com:6543/postgres`
+    *Note: Use port 6543 for Transaction Mode (recommended for serverless) or 5432 for Session Mode.*
+
+### Step 2: Configure Vercel
+1.  Go to [Vercel Dashboard](https://vercel.com/dashboard) and click **Add New...** -> **Project**.
+2.  Import your GitHub repository.
+3.  In **Configure Project**:
+    - **Framework Preset**: Other (or leave default).
+    - **Root Directory**: `backend` (Important! Select the backend folder).
+    - **Environment Variables**: Add the following:
+        - `DATABASE_URL`: Your Supabase connection string (replace `[YOUR-PASSWORD]` with actual password).
+        - `API_SECRET_KEY`: A random secret string.
+        - `DEBUG`: `False`
+        - `ALLOWED_ORIGINS`: `https://your-frontend.vercel.app,http://localhost:3000`
+4.  Click **Deploy**.
+
+### Step 3: Verify
+Vercel will build and deploy your API.
+- Visit `https://your-project.vercel.app/docs` to see the API documentation.
+- Update your Frontend environment variable `NEXT_PUBLIC_API_URL` to point to this new URL.
