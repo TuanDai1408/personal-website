@@ -44,7 +44,7 @@ class Settings(BaseSettings):
     @classmethod
     def parse_database_url(cls, v: str) -> str:
         if v and v.startswith("postgresql://"):
-            return v.replace("postgresql://", "postgresql+asyncpg://", 1)
+            return v.replace("postgresql://", "postgresql+psycopg://", 1)
         return v
 
     model_config = {
