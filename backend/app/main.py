@@ -13,16 +13,19 @@ settings = get_settings()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan events"""
-    # Startup: Initialize database
+    # Startup
     print("🚀 Starting up application...")
     
-    # Create data directory if it doesn't exist and we are using SQLite
+    # Create data directory only for SQLite (local development)
     if settings.database_url.startswith("sqlite"):
         os.makedirs("data", exist_ok=True)
-    
-    # Initialize database tables
-    await init_db()
-    print("✅ Database initialized")
+        # Initialize database tables for SQLite
+        await init_db()
+        print("✅ Database initialized (SQLite)")
+    else:
+        # For PostgreSQL (production), skip init_db during startup
+        # Tables should already exist in Supabase
+        print("✅ Using PostgreSQL - skipping table creation")
     
     yield
     
