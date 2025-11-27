@@ -31,7 +31,7 @@ class ApiClient {
     private baseUrl: string
 
     constructor(baseUrl: string) {
-        this.baseUrl = baseUrl
+        this.baseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl
     }
 
     private async request<T>(

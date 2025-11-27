@@ -28,6 +28,7 @@ class Settings(BaseSettings):
         "https://personal-website-3qr.pages.dev",
         "https://daidataly.online",
         "https://www.daidataly.online",
+        "https://personal.daidataly.online",
     ]
 
     @field_validator("allowed_origins", mode="before")
