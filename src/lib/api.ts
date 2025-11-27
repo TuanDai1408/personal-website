@@ -1,5 +1,5 @@
 // API base URL - automatically uses production URL or local development
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://personal.api.daidataly.online'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://personal-website-vercel-three.vercel.app'
 
 export interface ContactFormData {
     name: string
@@ -15,6 +15,16 @@ export interface NewsletterData {
 export interface ApiResponse<T> {
     data?: T
     error?: string
+}
+
+export interface LoginResponse {
+    token: string
+    message: string
+}
+
+export interface StatsResponse {
+    day: string
+    views: number
 }
 
 class ApiClient {
@@ -70,6 +80,31 @@ class ApiClient {
     async checkHealth(): Promise<ApiResponse<any>> {
         return this.request('/api/health', {
             method: 'GET',
+        })
+    }
+
+    async login(password: string, username: string = "admin"): Promise<ApiResponse<LoginResponse>> {
+        return this.request('/api/admin/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, password }),
+        })
+    }
+
+    async getAdminStats(): Promise<ApiResponse<StatsResponse[]>> {
+        return this.request('/api/admin/stats', {
+            method: 'GET',
+        })
+    }
+
+    async getAdminContacts(): Promise<ApiResponse<any[]>> {
+        return this.request('/api/admin/contacts', {
+            method: 'GET',
+        })
+    }
+
+    async deleteAdminContact(id: number): Promise<ApiResponse<any>> {
+        return this.request(`/api/admin/contacts/${id}`, {
+            method: 'DELETE',
         })
     }
 }

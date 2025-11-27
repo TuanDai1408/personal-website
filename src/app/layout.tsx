@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -37,6 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SmoothScroll>{children}</SmoothScroll>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

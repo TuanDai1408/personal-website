@@ -10,6 +10,7 @@ import { Mail, Phone, MapPin, Send } from "lucide-react"
 import { useState } from "react"
 import emailjs from '@emailjs/browser'
 import { EMAILJS_CONFIG, isEmailJsConfigured } from "@/lib/emailjs.config"
+import { api } from "@/lib/api"
 
 interface ContactFormData {
     name: string
@@ -63,6 +64,16 @@ export function Contact() {
                 },
                 EMAILJS_CONFIG.publicKey
             )
+
+            // 2️⃣ Sau đó lưu vào backend
+            // await api.submitContact({
+            //     name: formData.name,
+            //     email: formData.email,
+            //     subject: formData.subject,
+            //     message: formData.message
+            // })
+
+
 
             if (result.status === 200) {
                 setSubmitStatus({

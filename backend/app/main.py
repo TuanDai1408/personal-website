@@ -5,7 +5,7 @@ import os
 
 from app.config import get_settings
 from app.database import init_db
-from app.routes import contact, newsletter, health
+from app.routes import contact, newsletter, health, admin
 
 settings = get_settings()
 
@@ -58,6 +58,7 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(contact.router)
 app.include_router(newsletter.router)
+app.include_router(admin.router)
 
 
 @app.get("/")

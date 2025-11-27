@@ -64,6 +64,11 @@ export function Header() {
                             Tải CV
                         </Button>
                     </a>
+                    <Link href="/admin/login">
+                        <Button variant="outline" size="sm" className="ml-2 border-neon-blue text-neon-blue hover:bg-neon-blue hover:text-white">
+                            Admin
+                        </Button>
+                    </Link>
                 </nav>
 
                 {/* Mobile Menu Toggle */}
@@ -98,6 +103,11 @@ export function Header() {
                         <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf" className="w-full">
                             <Button className="w-full bg-neon-purple text-white">Tải CV</Button>
                         </a>
+                        <Link href="/admin/login" className="w-full" onClick={() => setMobileMenuOpen(false)}>
+                            <Button variant="outline" className="w-full border-neon-blue text-neon-blue hover:bg-neon-blue hover:text-white">
+                                Admin Portal
+                            </Button>
+                        </Link>
                     </nav>
                 </motion.div>
             )}
