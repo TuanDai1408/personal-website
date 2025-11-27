@@ -29,6 +29,7 @@ async def create_contact(
     contact = Contact(
         name=contact_data.name,
         email=contact_data.email,
+        phone=contact_data.phone,
         subject=contact_data.subject,
         message=contact_data.message
     )
