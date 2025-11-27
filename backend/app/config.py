@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Union, Any
+from pydantic import field_validator, AnyHttpUrl
 from functools import lru_cache
 
 
@@ -21,13 +22,29 @@ class Settings(BaseSettings):
     
     # CORS
     frontend_url: str = "http://localhost:4000"
-    allowed_origins: List[str] = [
+    allowed_origins: Union[List[str], str] = [
         "http://localhost:4000",
         "http://localhost:3000",
         "https://personal-website-3qr.pages.dev",
         "https://daidataly.online",
         "https://www.daidataly.online",
     ]
+
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
+    def parse_allowed_origins(cls, v: Any) -> List[str]:
+        if isinstance(v, str):
+            if v.startswith("["):
+                import json
+                return json.loads(v)
+            return [origin.strip() for origin in v.split(",")]
+        return v
+
+    model_config = {
+        "env_file": ".env",
+        "case_sensitive": False,
+        "extra": "ignore"
+    }
     
     # Email Configuration
     enable_email: bool = False  # Set to True when SMTP is configured
@@ -41,9 +58,7 @@ class Settings(BaseSettings):
     # Security
     api_secret_key: str = "dev-secret-key-change-in-production"
     
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+
 
 
 @lru_cache()
