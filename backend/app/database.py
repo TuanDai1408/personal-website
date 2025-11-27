@@ -1,19 +1,16 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.pool import NullPool
 from app.config import get_settings
 
 settings = get_settings()
 
-# Create async engine with serverless-optimized settings
+# Create async engine with NullPool (no pooling for serverless)
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
     future=True,
-    # Serverless optimizations
-    pool_pre_ping=True,  # Verify connections before using
-    pool_size=1,  # Minimal pool for serverless
-    max_overflow=0,  # No overflow for serverless
-    pool_recycle=300,  # Recycle connections after 5 minutes
+    poolclass=NullPool,  # Disable connection pooling for Lambda
 )
 
 # Create session factory
