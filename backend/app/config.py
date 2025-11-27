@@ -40,6 +40,13 @@ class Settings(BaseSettings):
             return [origin.strip() for origin in v.split(",")]
         return v
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def parse_database_url(cls, v: str) -> str:
+        if v and v.startswith("postgresql://"):
+            return v.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return v
+
     model_config = {
         "env_file": ".env",
         "case_sensitive": False,
