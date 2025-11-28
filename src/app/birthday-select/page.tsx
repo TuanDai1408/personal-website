@@ -114,10 +114,10 @@ export default function BirthdaySelectPage() {
                                     </Avatar>
                                     <div>
                                         <p className="font-medium text-white">{selectedUser.full_name || selectedUser.username}</p>
-                                        <p className="text-xs text-slate-400 flex items-center gap-1">
+                                        {/* <p className="text-xs text-slate-400 flex items-center gap-1">
                                             <Calendar className="w-3 h-3" />
                                             {new Date(selectedUser.dob!).toLocaleDateString()}
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </>
                             ) : (
@@ -158,7 +158,7 @@ export default function BirthdaySelectPage() {
                                             </Avatar>
                                             <div>
                                                 <p className="font-medium text-slate-200">{user.full_name || user.username}</p>
-                                                <p className="text-xs text-slate-500">{new Date(user.dob!).toLocaleDateString()}</p>
+                                                {/* <p className="text-xs text-slate-500">{new Date(user.dob!).toLocaleDateString()}</p> */}
                                             </div>
                                         </motion.button>
                                     ))
