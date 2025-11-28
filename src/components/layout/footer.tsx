@@ -29,8 +29,8 @@ export function Footer() {
                     {[Facebook, Github, Linkedin].map((Icon, i) => {
                         const links = [
                             "https://www.facebook.com/tran.tuan.ai.835268/",
-                            "https://github.com/TuanDai1408",
-                            "http://pam-dagster.daidataly.online/jobs"
+                            // "https://github.com/TuanDai1408",
+                            // "http://pam-dagster.daidataly.online/jobs"
                         ];
 
                         return (

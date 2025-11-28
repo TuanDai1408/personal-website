@@ -39,7 +39,7 @@ export function TechRadar() {
                             </div>
                             <div className="flex items-center gap-4">
                                 <div className="w-3 h-3 rounded-full bg-neon-purple shadow-[0_0_10px_#b026ff]" />
-                                <span className="font-medium">Khá (Advanced): Kafka, Spark, dbt</span>
+                                <span className="font-medium">Khá (Advanced): ETL, Analytics, dbt</span>
                             </div>
                             <div className="flex items-center gap-4">
                                 <div className="w-3 h-3 rounded-full bg-neon-green shadow-[0_0_10px_#00ff9d]" />

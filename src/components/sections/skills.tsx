@@ -5,11 +5,11 @@ import { motion } from "framer-motion"
 
 const skills = [
     {
-        category: "Data Engineering",
+        category: "Data Management",
         items: [
             { name: "BigQuery", level: 90 },
-            { name: "Kafka", level: 85 },
-            { name: "Spark", level: 60 },
+            { name: "PowerBI", level: 85 },
+            { name: "Tableau", level: 60 },
             { name: "ETL/ELT", level: 95 },
             { name: "Dagster", level: 85 },
         ],

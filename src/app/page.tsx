@@ -31,7 +31,7 @@ export default function Home() {
       <Testimonials />
       <Contact />
       <Footer />
-      <BirthdayFloatButton />
+      {/* <BirthdayFloatButton /> */}
     </main>
   )
 }

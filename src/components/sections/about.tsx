@@ -65,7 +65,7 @@ export function About() {
 
                         <div className="grid sm:grid-cols-2 gap-4 mt-8">
                             {[
-                                { icon: Database, title: "Data Engineering", desc: "BigQuery, Kafka, Spark" },
+                                { icon: Database, title: "Data Management", desc: "BigQuery, Dagster, Airflow" },
                                 { icon: Code2, title: "Programming", desc: "Python, SQL, Airflow" },
                                 { icon: LineChart, title: "Analytics", desc: "GA4, Tracking, Segmentation" },
                             ].map((item, i) => (

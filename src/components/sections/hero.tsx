@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Download, Github, Linkedin, Facebook } from "lucide-react"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { toast } from "sonner"
+
 
 const TypingEffect = ({ text }: { text: string }) => {
     const [displayedText, setDisplayedText] = useState("")
@@ -58,11 +60,22 @@ export function Hero() {
                     </p>
 
                     <div className="flex flex-wrap gap-4">
-                        <Button size="lg" className="bg-neon-purple hover:bg-neon-purple/80 text-white border-none shadow-[0_0_20px_rgba(176,38,255,0.3)]">
+                        <Button size="lg" className="bg-neon-purple hover:bg-neon-purple/80 text-white border-none shadow-[0_0_20px_rgba(176,38,255,0.3)]"
+                            onClick={() => {
+                                toast.success("Hãy liên hệ với Admin để xem dự án")
+                            }}
+                        >
                             Xem Dự Án <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
-                        <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf">
-                            <Button size="lg" variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10">
+                        <a
+                            // href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" 
+                            download="Tran-Tuan-Dai-CV.vn.pdf">
+                            <Button size="lg" variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10"
+                                onClick={() => {
+                                    toast.success("Hãy liên hệ với Admin để tải CV")
+                                    window.location.href = "/#contact"
+                                }}
+                            >
                                 Tải CV <Download className="ml-2 h-4 w-4" />
                             </Button>
                         </a>
@@ -83,8 +96,8 @@ export function Hero() {
                         {[Facebook, Github, Linkedin].map((Icon, i) => {
                             const links = [
                                 "https://www.facebook.com/tran.tuan.ai.835268/",
-                                "https://github.com/TuanDai1408",
-                                "http://pam-dagster.daidataly.online/jobs"
+                                // "https://github.com/TuanDai1408",
+                                // "http://pam-dagster.daidataly.online/jobs"
                             ];
 
                             return (

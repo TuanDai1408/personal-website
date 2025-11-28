@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
+import { toast } from "sonner"
 
 const navItems = [
     { name: "Về tôi", href: "#about" },
@@ -59,8 +60,15 @@ export function Header() {
                         </Link>
                     ))}
                     <ThemeToggle />
-                    <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf">
-                        <Button size="sm" className="bg-neon-purple hover:bg-neon-purple/80 text-white border-none">
+                    <a
+                        // href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" 
+                        download="Tran-Tuan-Dai-CV.vn.pdf">
+                        <Button size="sm" className="bg-neon-purple hover:bg-neon-purple/80 text-white border-none"
+                            onClick={() => {
+                                toast.success("Hãy liên hệ với Admin để tải CV")
+                                window.location.href = "/#contact"
+                            }}
+                        >
                             Tải CV
                         </Button>
                     </a>
@@ -100,7 +108,9 @@ export function Header() {
                                 {item.name}
                             </Link>
                         ))}
-                        <a href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" download="Tran-Tuan-Dai-CV.vn.pdf" className="w-full">
+                        <a
+                            // href="/birthday/hanni/Tran-Tuan-Dai-CV.vn.pdf" 
+                            download="Tran-Tuan-Dai-CV.vn.pdf">
                             <Button className="w-full bg-neon-purple text-white">Tải CV</Button>
                         </a>
                         <Link href="/admin/login" className="w-full" onClick={() => setMobileMenuOpen(false)}>
