@@ -159,7 +159,7 @@ export default function UsersPage() {
                                     <TableCell className="font-medium text-slate-200">
                                         <div className="flex items-center gap-3">
                                             <Avatar className="h-8 w-8">
-                                                <AvatarImage src={`https://avatar.vercel.sh/${user.username}`} />
+                                                <AvatarImage src={user.images?.[0]?.image_url || `https://avatar.vercel.sh/${user.username}`} />
                                                 <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
                                             </Avatar>
                                             <div>

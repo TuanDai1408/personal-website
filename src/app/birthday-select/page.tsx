@@ -109,7 +109,7 @@ export default function BirthdaySelectPage() {
                             {selectedUser ? (
                                 <>
                                     <Avatar className="h-10 w-10 border-2 border-indigo-500/50">
-                                        <AvatarImage src={`https://avatar.vercel.sh/${selectedUser.username}`} />
+                                        <AvatarImage src={selectedUser.images?.[0]?.image_url || `https://avatar.vercel.sh/${selectedUser.username}`} />
                                         <AvatarFallback>{selectedUser.username[0].toUpperCase()}</AvatarFallback>
                                     </Avatar>
                                     <div>
@@ -153,7 +153,7 @@ export default function BirthdaySelectPage() {
                                             className="w-full p-3 flex items-center gap-3 text-left border-b border-slate-800 last:border-0"
                                         >
                                             <Avatar className="h-8 w-8">
-                                                <AvatarImage src={`https://avatar.vercel.sh/${user.username}`} />
+                                                <AvatarImage src={user.images?.[0]?.image_url || `https://avatar.vercel.sh/${user.username}`} />
                                                 <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
                                             </Avatar>
                                             <div>

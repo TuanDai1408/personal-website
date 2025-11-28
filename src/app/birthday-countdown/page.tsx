@@ -80,7 +80,7 @@ function BirthdayCountdownContent() {
             >
                 <div className="flex justify-center">
                     <Avatar className="h-32 w-32 border-4 border-indigo-500/50 shadow-2xl">
-                        <AvatarImage src={`https://avatar.vercel.sh/${user.username}`} />
+                        <AvatarImage src={user.images?.[0]?.image_url || `https://avatar.vercel.sh/${user.username}`} />
                         <AvatarFallback className="text-4xl">{user.username[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
                 </div>
