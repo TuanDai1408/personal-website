@@ -27,6 +27,22 @@ export interface StatsResponse {
     views: number
 }
 
+export interface UserImage {
+    id: number
+    image_url: string
+    created_at: string
+}
+
+export interface User {
+    id: number
+    username: string
+    email: string
+    role: string
+    full_name?: string
+    dob?: string
+    images?: UserImage[]
+}
+
 class ApiClient {
     private baseUrl: string
 
@@ -106,6 +122,74 @@ class ApiClient {
         return this.request(`/api/admin/contacts/${id}`, {
             method: 'DELETE',
         })
+    }
+
+    // --- User API ---
+    async getUsers(): Promise<ApiResponse<User[]>> {
+        return this.request('/api/users/', { method: 'GET' })
+    }
+
+    async createUser(data: any): Promise<ApiResponse<any>> {
+        return this.request('/api/users/', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+    }
+
+    async updateUser(id: number, data: any): Promise<ApiResponse<any>> {
+        return this.request(`/api/users/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        })
+    }
+
+    async deleteUser(id: number): Promise<ApiResponse<any>> {
+        return this.request(`/api/users/${id}`, { method: 'DELETE' })
+    }
+
+    // --- Content API ---
+    async getPosts(): Promise<ApiResponse<any[]>> {
+        return this.request('/api/content/posts', { method: 'GET' })
+    }
+
+    async createPost(data: any): Promise<ApiResponse<any>> {
+        return this.request('/api/content/posts', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+    }
+
+    async updatePost(id: number, data: any): Promise<ApiResponse<any>> {
+        return this.request(`/api/content/posts/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        })
+    }
+
+    async deletePost(id: number): Promise<ApiResponse<any>> {
+        return this.request(`/api/content/posts/${id}`, { method: 'DELETE' })
+    }
+
+    async getProjects(): Promise<ApiResponse<any[]>> {
+        return this.request('/api/content/projects', { method: 'GET' })
+    }
+
+    async createProject(data: any): Promise<ApiResponse<any>> {
+        return this.request('/api/content/projects', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+    }
+
+    async updateProject(id: number, data: any): Promise<ApiResponse<any>> {
+        return this.request(`/api/content/projects/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        })
+    }
+
+    async deleteProject(id: number): Promise<ApiResponse<any>> {
+        return this.request(`/api/content/projects/${id}`, { method: 'DELETE' })
     }
 }
 

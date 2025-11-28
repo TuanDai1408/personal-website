@@ -4,9 +4,8 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { birthdayConfig } from "@/config/birthday"
 
-const photos = birthdayConfig.images.gallery
-
-export function GallerySection() {
+export function GallerySection({ images }: { images: string[] }) {
+    const photos = images.length > 0 ? images : birthdayConfig.images.gallery
     return (
         <section className="py-20 bg-background">
             <div className="container">

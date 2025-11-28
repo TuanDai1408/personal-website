@@ -9,7 +9,7 @@ export function BirthdayFloatButton() {
     const [isHovered, setIsHovered] = useState(false)
 
     return (
-        <Link href="/birthday">
+        <Link href="/birthday-select">
             <motion.div
                 className="fixed bottom-8 right-8 z-50 flex items-center justify-center"
                 initial={{ y: 100, opacity: 0 }}

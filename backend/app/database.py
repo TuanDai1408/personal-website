@@ -27,6 +27,11 @@ class Base(DeclarativeBase):
     """Base class for all database models"""
     pass
 
+# Import models here to ensure they are registered with Base.metadata
+from app.models.contact import Contact, Newsletter
+from app.models.user import User
+from app.models.content import Category, Post, Project
+
 
 async def get_db():
     """Dependency for getting database session"""

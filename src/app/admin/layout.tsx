@@ -12,21 +12,23 @@ import {
     Settings,
     LogOut,
     Menu,
-    X,
     Bell,
     Search,
-    ChevronRight
+    ChevronRight,
+    Image as ImageIcon
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
+import { toast } from "sonner"
 
 const sidebarItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
-    { icon: Users, label: "Users", href: "/admin/users" },
-    { icon: ShoppingCart, label: "Orders", href: "/admin/orders" },
     { icon: BarChart2, label: "Analytics", href: "/admin/analytics" },
+    { icon: ShoppingCart, label: "Content", href: "/admin/content" },
+    { icon: ImageIcon, label: "Media", href: "/admin/media" },
+    { icon: Users, label: "Users", href: "/admin/users" },
     { icon: Settings, label: "Settings", href: "/admin/settings" },
 ]
 
@@ -125,6 +127,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </div>
 
                     <div className="flex items-center gap-4">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-slate-400 hover:text-white relative"
+                            onClick={() => {
+                                localStorage.removeItem("adminToken")
+                                toast.success("Đăng xuất thành công")
+                                window.location.href = "/admin/login"
+                            }}
+                        >
+                            <LogOut size={20} />
+                        </Button>
+
                         <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white relative">
                             <Bell size={20} />
                             <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse" />

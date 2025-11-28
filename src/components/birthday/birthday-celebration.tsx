@@ -9,12 +9,14 @@ import { InteractiveStars } from "./interactive-stars"
 import { GallerySection } from "./gallery-section"
 import { FireworksSection } from "./fireworks-section"
 
-export function BirthdayCelebration() {
+import { User } from "@/lib/api"
+
+export function BirthdayCelebration({ user }: { user: User }) {
     const [giftOpened, setGiftOpened] = useState(false)
 
     return (
         <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-            <BirthdayHero onOpenGift={() => {
+            <BirthdayHero user={user} onOpenGift={() => {
                 const element = document.getElementById('gift-section')
                 element?.scrollIntoView({ behavior: 'smooth' })
             }} />
@@ -36,7 +38,7 @@ export function BirthdayCelebration() {
                     >
                         <ScrollSections />
                         <InteractiveStars />
-                        <GallerySection />
+                        <GallerySection images={user.images?.map(img => img.image_url) || []} />
                         <FireworksSection />
                     </motion.div>
                 )}

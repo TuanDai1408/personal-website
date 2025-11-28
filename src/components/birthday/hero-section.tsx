@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Gift } from "lucide-react"
 import { birthdayConfig } from "@/config/birthday"
 
-export function BirthdayHero({ onOpenGift }: { onOpenGift: () => void }) {
+import { User } from "@/lib/api"
+
+export function BirthdayHero({ onOpenGift, user }: { onOpenGift: () => void, user: User }) {
     useEffect(() => {
         const duration = 3 * 1000
         const animationEnd = Date.now() + duration
@@ -69,8 +71,8 @@ export function BirthdayHero({ onOpenGift }: { onOpenGift: () => void }) {
                     <div className="absolute inset-1 bg-background rounded-full p-1">
                         <div className="w-full h-full rounded-full overflow-hidden relative">
                             <Image
-                                src={birthdayConfig.images.avatar}
-                                alt={birthdayConfig.name}
+                                src={user.images?.[0]?.image_url || "https://github.com/shadcn.png"}
+                                alt={user.full_name || user.username}
                                 fill
                                 className="object-cover"
                             />
@@ -111,7 +113,7 @@ export function BirthdayHero({ onOpenGift }: { onOpenGift: () => void }) {
                         transition={{ delay: 2.5 }}
                         className="text-xl md:text-2xl text-muted-foreground mt-4"
                     >
-                        Chúc {birthdayConfig.name} tuổi mới càng rực rỡ, thành công và hạnh phúc hơn nữa! 🎉
+                        Chúc {user.full_name || user.username} tuổi mới càng rực rỡ, thành công và hạnh phúc hơn nữa! 🎉
                     </motion.h2>
                 </div>
 

@@ -169,7 +169,7 @@ export default function AdminLogin() {
 
                     <p className="mt-8 text-center text-sm text-slate-500">
                         Chưa có tài khoản?{" "}
-                        <a href="#" className="text-indigo-400 hover:text-indigo-300 hover:underline">
+                        <a href="/#contact" className="text-indigo-400 hover:text-indigo-300 hover:underline">
                             Liên hệ quản trị viên
                         </a>
                     </p>
