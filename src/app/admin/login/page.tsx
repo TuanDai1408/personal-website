@@ -165,6 +165,10 @@ export default function AdminLogin() {
                                 "Đăng nhập Dashboard"
                             )}
                         </Button>
+
+
+
+
                     </form>
 
                     <p className="mt-8 text-center text-sm text-slate-500">
@@ -173,6 +177,14 @@ export default function AdminLogin() {
                             Liên hệ quản trị viên
                         </a>
                     </p>
+
+                    <p className="mt-8 text-center text-sm text-slate-500">
+                        <a href="/" className="text-indigo-400 hover:text-indigo-300 hover:underline">
+                            Quay lại trang chủ
+                        </a>
+                    </p>
+
+
                 </motion.div>
             </div>
         </div>

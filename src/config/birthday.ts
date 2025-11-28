@@ -22,9 +22,18 @@ export const birthdayConfig: BirthdayConfig = {
         ]
     },
     messages: [
-        "Chúc Hanni tuổi mới thật nhiều niềm vui! 🎂",
+        "Chúc tuổi mới thật nhiều niềm vui! 🎂",
         "Luôn xinh đẹp và tỏa sáng trên sân khấu! 🌟",
-        "Thành công rực rỡ cùng NewJeans! 🚀",
-        "Luôn hạnh phúc và yêu đời nhé! ❤️"
+        "Thành công rực rỡ ! 🚀",
+        "Luôn hạnh phúc và yêu đời nhé! ❤️",
+
+        // Cute thêm
+        "Chúc tuổi mới đáng yêu như chính bạn vậy! 🎀✨",
+        "Hy vọng mọi điều bạn mong ước đều nở hoa trong năm nay 🌸",
+        "Chúc bạn luôn cười tươi như nắng sớm và rạng rỡ cả ngày! 😊☀️",
+        "Tuổi mới thêm nhiều bất ngờ vui vẻ và điều ngọt ngào nhé! 🍰💖",
+        "Chúc mỗi ngày của bạn đều lung linh một chút phép màu ✨🦋",
+        "Năm mới của bạn sẽ tràn ngập niềm vui, tình yêu và thật nhiều quà! 🎁💕"
     ]
+
 }

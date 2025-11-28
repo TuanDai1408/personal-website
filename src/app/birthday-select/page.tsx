@@ -176,6 +176,12 @@ export default function BirthdaySelectPage() {
                 >
                     Tiếp tục <Gift className="ml-2 w-5 h-5" />
                 </Button>
+
+                <p className="mt-8 text-center text-sm text-slate-500">
+                    <a href="/" className="text-indigo-400 hover:text-indigo-300 hover:underline">
+                        Quay lại trang chủ
+                    </a>
+                </p>
             </motion.div>
         </main>
     )
