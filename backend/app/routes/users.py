@@ -14,6 +14,9 @@ router = APIRouter(prefix="/api/users", tags=["users"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def get_password_hash(password):
+    # Bcrypt has a max password length of 72 bytes
+    if isinstance(password, str):
+        password = password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
     return pwd_context.hash(password)
 
 def verify_password(plain_password, hashed_password):

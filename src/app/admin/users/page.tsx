@@ -72,13 +72,20 @@ export default function UsersPage() {
         const imageUrls = formData.images.split(',').map(s => s.trim()).filter(Boolean)
 
         const payload: any = {
-            username: formData.username,
-            email: formData.email,
+            username: formData.username.trim(),
+            email: formData.email.trim(),
             role: formData.role || "user",
             is_active: formData.is_active !== undefined ? formData.is_active : true,
-            full_name: formData.full_name || undefined,
-            dob: formData.dob || undefined,
-            images: imageUrls.length > 0 ? imageUrls : undefined
+            images: imageUrls  // Always send array (empty or with URLs)
+        }
+
+        // Only add optional fields if they have values
+        if (formData.full_name && formData.full_name.trim()) {
+            payload.full_name = formData.full_name.trim()
+        }
+
+        if (formData.dob && formData.dob.trim()) {
+            payload.dob = formData.dob
         }
 
         if (selectedUser) {
@@ -92,24 +99,6 @@ export default function UsersPage() {
             if (error) {
                 toast.error("Update failed: " + error)
             } else {
-                toast.success("User updated successfully")
-                fetchData()
-                setIsDialogOpen(false)
-            }
-        } else {
-            // Create new user - password is required
-            if (!formData.password) {
-                toast.error("Password is required for new users")
-                return
-            }
-            payload.password = formData.password
-
-            const { error } = await api.createUser(payload)
-            if (error) {
-                toast.error("Create failed: " + error)
-            } else {
-                toast.success("User created successfully")
-                fetchData()
                 setIsDialogOpen(false)
             }
         }
