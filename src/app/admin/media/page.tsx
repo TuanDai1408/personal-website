@@ -246,9 +246,9 @@ export default function MediaPage() {
                 </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
                 {/* Folder Sidebar */}
-                <Card className="w-64 bg-slate-900/50 border-slate-800">
+                <Card className="w-full md:w-64 bg-slate-900/50 border-slate-800 h-fit">
                     <CardContent className="p-4">
                         <h3 className="text-sm font-semibold text-slate-400 mb-3">Folders</h3>
                         <div className="space-y-1">

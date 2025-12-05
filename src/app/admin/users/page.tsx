@@ -198,65 +198,67 @@ export default function UsersPage() {
 
             <Card className="bg-slate-900/50 border-slate-800">
                 <CardContent className="p-0">
-                    <Table>
-                        <TableHeader>
-                            <TableRow className="border-slate-800 hover:bg-slate-800/50">
-                                <TableHead className="text-slate-400">User</TableHead>
-                                <TableHead className="text-slate-400">Full Name</TableHead>
-                                <TableHead className="text-slate-400">Birthday</TableHead>
-                                <TableHead className="text-slate-400">Role</TableHead>
-                                <TableHead className="text-right text-slate-400">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredUsers.map((user) => (
-                                <TableRow key={user.id} className="border-slate-800 hover:bg-slate-800/50">
-                                    <TableCell className="font-medium text-slate-200">
-                                        <div className="flex items-center gap-3">
-                                            <Avatar className="h-8 w-8">
-                                                <AvatarImage src={user.images?.[0]?.image_url || `https://avatar.vercel.sh/${user.username}`} />
-                                                <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
-                                            </Avatar>
-                                            <div>
-                                                <p>{user.username}</p>
-                                                <p className="text-xs text-slate-500">{user.email}</p>
-                                            </div>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-slate-300">{user.full_name || "-"}</TableCell>
-                                    <TableCell className="text-slate-300">
-                                        {user.dob ? (
-                                            <div className="flex items-center gap-2">
-                                                <Calendar className="h-3 w-3 text-slate-400" />
-                                                {new Date(user.dob).toLocaleDateString()}
-                                            </div>
-                                        ) : "-"}
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className="flex items-center gap-2">
-                                            {user.role === 'admin' ? <Shield className="h-3 w-3 text-indigo-400" /> : <UserIcon className="h-3 w-3 text-slate-400" />}
-                                            <span className="text-slate-300 capitalize">{user.role}</span>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        <div className="flex justify-end gap-2">
-                                            <Button variant="ghost" size="icon" className="text-slate-400 hover:text-indigo-400" onClick={() => openEdit(user)}>
-                                                <Edit className="h-4 w-4" />
-                                            </Button>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                className="text-slate-400 hover:text-red-400"
-                                                onClick={() => openDeleteConfirm(user.id)}
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
-                                        </div>
-                                    </TableCell>
+                    <div className="overflow-x-auto">
+                        <Table>
+                            <TableHeader>
+                                <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                                    <TableHead className="text-slate-400 min-w-[200px]">User</TableHead>
+                                    <TableHead className="text-slate-400 min-w-[150px]">Full Name</TableHead>
+                                    <TableHead className="text-slate-400 min-w-[120px]">Birthday</TableHead>
+                                    <TableHead className="text-slate-400 min-w-[100px]">Role</TableHead>
+                                    <TableHead className="text-right text-slate-400 min-w-[100px]">Actions</TableHead>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {filteredUsers.map((user) => (
+                                    <TableRow key={user.id} className="border-slate-800 hover:bg-slate-800/50">
+                                        <TableCell className="font-medium text-slate-200">
+                                            <div className="flex items-center gap-3">
+                                                <Avatar className="h-8 w-8">
+                                                    <AvatarImage src={user.images?.[0]?.image_url || `https://avatar.vercel.sh/${user.username}`} />
+                                                    <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
+                                                </Avatar>
+                                                <div>
+                                                    <p>{user.username}</p>
+                                                    <p className="text-xs text-slate-500">{user.email}</p>
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-slate-300">{user.full_name || "-"}</TableCell>
+                                        <TableCell className="text-slate-300">
+                                            {user.dob ? (
+                                                <div className="flex items-center gap-2">
+                                                    <Calendar className="h-3 w-3 text-slate-400" />
+                                                    {new Date(user.dob).toLocaleDateString()}
+                                                </div>
+                                            ) : "-"}
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2">
+                                                {user.role === 'admin' ? <Shield className="h-3 w-3 text-indigo-400" /> : <UserIcon className="h-3 w-3 text-slate-400" />}
+                                                <span className="text-slate-300 capitalize">{user.role}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-right">
+                                            <div className="flex justify-end gap-2">
+                                                <Button variant="ghost" size="icon" className="text-slate-400 hover:text-indigo-400" onClick={() => openEdit(user)}>
+                                                    <Edit className="h-4 w-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="text-slate-400 hover:text-red-400"
+                                                    onClick={() => openDeleteConfirm(user.id)}
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
                     {loading && (
                         <div className="p-8 space-y-4">
                             {[1, 2, 3].map((i) => (
