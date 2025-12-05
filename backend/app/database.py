@@ -10,8 +10,10 @@ settings = get_settings()
 connect_args = {}
 if "postgresql" in settings.database_url:
     connect_args = {
-        "prepared_statement_cache_size": 0,  # Disable prepared statements
-        "statement_cache_size": 0  # Disable statement cache
+        "server_settings": {
+            "jit": "off"  # Disable JIT compilation which can cause issues in serverless
+        },
+        "prepare_threshold": None  # Disable prepared statements
     }
 
 engine = create_async_engine(
