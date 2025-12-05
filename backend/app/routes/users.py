@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from typing import List
-from passlib.context import CryptContext
+import bcrypt
 
 from app.database import get_db
 from app.models.user import User, UserImage
@@ -11,16 +11,18 @@ from app.schemas import UserCreate, UserUpdate, UserResponse
 
 router = APIRouter(prefix="/api/users", tags=["users"])
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def get_password_hash(password):
+def get_password_hash(password: str) -> str:
+    """Hash a password using bcrypt"""
     # Bcrypt has a max password length of 72 bytes
-    if isinstance(password, str):
-        password = password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
-    return pwd_context.hash(password)
+    password_bytes = password.encode('utf-8')[:72]
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password_bytes, salt).decode('utf-8')
 
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify a password against a hash"""
+    password_bytes = plain_password.encode('utf-8')[:72]
+    hashed_bytes = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(password_bytes, hashed_bytes)
 
 @router.get("/", response_model=List[UserResponse])
 async def get_users(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(get_db)):
