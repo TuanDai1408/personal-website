@@ -94,11 +94,17 @@ async def update_user(user_id: int, user_update: UserUpdate, db: AsyncSession = 
     # Handle images separately
     if "images" in update_data:
         images = update_data.pop("images")
-        # Clear existing images (simple replacement strategy)
-        # Note: In a real app, you might want to handle add/remove selectively
-        for img in db_user.images:
-            await db.delete(img)
         
+        # Delete existing images in a single query to avoid prepared statement issues
+        if db_user.images:
+            await db.execute(
+                select(UserImage).where(UserImage.user_id == db_user.id)
+            )
+            # Delete all at once using relationship
+            db_user.images.clear()
+            await db.flush()  # Flush to execute delete
+        
+        # Add new images
         if images:
             for image_url in images:
                 db_image = UserImage(user_id=db_user.id, image_url=image_url)
