@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Card, CardContent } from "@/components/ui/card"
-import { Plus, Search, Edit, Trash2, Shield, User as UserIcon, Calendar, Image as ImageIcon } from "lucide-react"
+import { Plus, Search, Edit, Trash2, Shield, User as UserIcon, Calendar, Image as ImageIcon, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog"
@@ -19,6 +19,10 @@ export default function UsersPage() {
     const [searchTerm, setSearchTerm] = useState("")
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
+    const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
+    const [userToDelete, setUserToDelete] = useState<number | null>(null)
+    const [isSaving, setIsSaving] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
 
     // Form state
     const [formData, setFormData] = useState({
@@ -48,25 +52,36 @@ export default function UsersPage() {
         }
     }
 
-    const handleDelete = async (id: number) => {
-        if (!confirm("Are you sure you want to delete this user?")) return
+    const openDeleteConfirm = (id: number) => {
+        setUserToDelete(id)
+        setDeleteConfirmOpen(true)
+    }
 
-        const { error } = await api.deleteUser(id)
+    const handleDelete = async () => {
+        if (!userToDelete) return
+
+        setIsDeleting(true)
+        const { error } = await api.deleteUser(userToDelete)
 
         if (error) {
-            toast.error("Delete failed: " + error)
+            toast.error("❌ Xóa user thất bại: " + error)
         } else {
-            toast.success("User deleted successfully")
-            setUsers(users.filter(u => u.id !== id))
+            toast.success("✅ Đã xóa user thành công!")
+            setUsers(users.filter(u => u.id !== userToDelete))
         }
+        setIsDeleting(false)
+        setDeleteConfirmOpen(false)
+        setUserToDelete(null)
     }
 
     const handleSave = async () => {
         // Validate required fields
         if (!formData.username || !formData.email) {
-            toast.error("Username and email are required")
+            toast.error("Username và Email là bắt buộc!")
             return
         }
+
+        setIsSaving(true)
 
         // Parse comma-separated image URLs
         const imageUrls = formData.images.split(',').map(s => s.trim()).filter(Boolean)
@@ -90,18 +105,38 @@ export default function UsersPage() {
 
         if (selectedUser) {
             // Update existing user
-            if (formData.password) {
+            if (formData.password && formData.password.trim()) {
                 // Only include password if it was entered
-                payload.password = formData.password
+                payload.password = formData.password.trim()
             }
 
             const { error } = await api.updateUser(selectedUser.id, payload)
             if (error) {
-                toast.error("Update failed: " + error)
+                toast.error("Cập nhật thất bại: " + error)
             } else {
+                toast.success("✅ Đã cập nhật user thành công!")
+                fetchData()
+                setIsDialogOpen(false)
+            }
+        } else {
+            // Create new user - password is required
+            if (!formData.password || !formData.password.trim()) {
+                toast.error("Password là bắt buộc khi tạo user mới!")
+                setIsSaving(false)
+                return
+            }
+            payload.password = formData.password.trim()
+
+            const { error } = await api.createUser(payload)
+            if (error) {
+                toast.error("Tạo user thất bại: " + error)
+            } else {
+                toast.success("✅ Đã tạo user thành công!")
+                fetchData()
                 setIsDialogOpen(false)
             }
         }
+        setIsSaving(false)
     }
 
     const openEdit = (user: User) => {
@@ -212,7 +247,7 @@ export default function UsersPage() {
                                                 variant="ghost"
                                                 size="icon"
                                                 className="text-slate-400 hover:text-red-400"
-                                                onClick={() => handleDelete(user.id)}
+                                                onClick={() => openDeleteConfirm(user.id)}
                                             >
                                                 <Trash2 className="h-4 w-4" />
                                             </Button>
@@ -222,8 +257,43 @@ export default function UsersPage() {
                             ))}
                         </TableBody>
                     </Table>
+                    {loading && (
+                        <div className="p-8 space-y-4">
+                            {[1, 2, 3].map((i) => (
+                                <div key={i} className="flex items-center gap-4 animate-pulse">
+                                    <div className="h-10 w-10 bg-slate-800 rounded-full"></div>
+                                    <div className="flex-1 space-y-2">
+                                        <div className="h-4 bg-slate-800 rounded w-1/4"></div>
+                                        <div className="h-3 bg-slate-800 rounded w-1/3"></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </CardContent>
             </Card>
+
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+                <DialogContent className="bg-slate-900 border-slate-800 text-white">
+                    <DialogHeader>
+                        <DialogTitle>Xác nhận xóa user</DialogTitle>
+                    </DialogHeader>
+                    <div className="py-4">
+                        <p className="text-slate-300">Bạn có chắc chắn muốn xóa user này không?</p>
+                        <p className="text-sm text-slate-500 mt-2">Hành động này không thể hoàn tác.</p>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setDeleteConfirmOpen(false)} disabled={isDeleting} className="border-slate-700 text-slate-300 hover:bg-slate-800">
+                            Hủy
+                        </Button>
+                        <Button onClick={handleDelete} disabled={isDeleting} className="bg-red-600 hover:bg-red-700">
+                            {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Xóa
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogContent className="bg-slate-900 border-slate-800 text-white">
@@ -259,8 +329,11 @@ export default function UsersPage() {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="border-slate-700 text-slate-300 hover:bg-slate-800">Cancel</Button>
-                        <Button onClick={handleSave} className="bg-indigo-600 hover:bg-indigo-700">Save</Button>
+                        <Button variant="outline" onClick={() => setIsDialogOpen(false)} disabled={isSaving} className="border-slate-700 text-slate-300 hover:bg-slate-800">Cancel</Button>
+                        <Button onClick={handleSave} disabled={isSaving} className="bg-indigo-600 hover:bg-indigo-700">
+                            {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Save
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

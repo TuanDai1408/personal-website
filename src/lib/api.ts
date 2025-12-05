@@ -71,6 +71,11 @@ class ApiClient {
                 }
             }
 
+            // Handle 204 No Content (DELETE operations)
+            if (response.status === 204) {
+                return { data: {} as T }
+            }
+
             const data = await response.json()
             return { data }
         } catch (error) {

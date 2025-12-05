@@ -95,14 +95,12 @@ async def update_user(user_id: int, user_update: UserUpdate, db: AsyncSession = 
     if "images" in update_data:
         images = update_data.pop("images")
         
-        # Delete existing images in a single query to avoid prepared statement issues
-        if db_user.images:
-            await db.execute(
-                select(UserImage).where(UserImage.user_id == db_user.id)
-            )
-            # Delete all at once using relationship
-            db_user.images.clear()
-            await db.flush()  # Flush to execute delete
+        # Delete existing images using raw SQL to avoid prepared statement issues
+        from sqlalchemy import delete
+        await db.execute(
+            delete(UserImage).where(UserImage.user_id == db_user.id)
+        )
+        await db.flush()  # Execute the delete immediately
         
         # Add new images
         if images:
