@@ -6,22 +6,11 @@ from app.config import get_settings
 settings = get_settings()
 
 # Create async engine with NullPool (no pooling for serverless)
-# Disable prepared statements for PostgreSQL in serverless to avoid conflicts
-connect_args = {}
-if "postgresql" in settings.database_url:
-    connect_args = {
-        "server_settings": {
-            "jit": "off"  # Disable JIT compilation which can cause issues in serverless
-        },
-        "prepare_threshold": None  # Disable prepared statements
-    }
-
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
     future=True,
     poolclass=NullPool,  # Disable connection pooling for Lambda
-    connect_args=connect_args
 )
 
 # Create session factory
