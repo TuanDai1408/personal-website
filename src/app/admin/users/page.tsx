@@ -27,6 +27,8 @@ export default function UsersPage() {
         password: "",
         full_name: "",
         dob: "",
+        role: "user",
+        is_active: true,
         images: "" // comma separated urls
     })
 
@@ -60,13 +62,32 @@ export default function UsersPage() {
     }
 
     const handleSave = async () => {
-        const payload = {
-            ...formData,
-            images: formData.images.split(',').map(s => s.trim()).filter(Boolean)
+        // Validate required fields
+        if (!formData.username || !formData.email) {
+            toast.error("Username and email are required")
+            return
+        }
+
+        // Parse comma-separated image URLs
+        const imageUrls = formData.images.split(',').map(s => s.trim()).filter(Boolean)
+
+        const payload: any = {
+            username: formData.username,
+            email: formData.email,
+            role: formData.role || "user",
+            is_active: formData.is_active !== undefined ? formData.is_active : true,
+            full_name: formData.full_name || undefined,
+            dob: formData.dob || undefined,
+            images: imageUrls.length > 0 ? imageUrls : undefined
         }
 
         if (selectedUser) {
-            // Update
+            // Update existing user
+            if (formData.password) {
+                // Only include password if it was entered
+                payload.password = formData.password
+            }
+
             const { error } = await api.updateUser(selectedUser.id, payload)
             if (error) {
                 toast.error("Update failed: " + error)
@@ -76,7 +97,13 @@ export default function UsersPage() {
                 setIsDialogOpen(false)
             }
         } else {
-            // Create
+            // Create new user - password is required
+            if (!formData.password) {
+                toast.error("Password is required for new users")
+                return
+            }
+            payload.password = formData.password
+
             const { error } = await api.createUser(payload)
             if (error) {
                 toast.error("Create failed: " + error)
@@ -96,6 +123,8 @@ export default function UsersPage() {
             password: "", // Don't show password
             full_name: user.full_name || "",
             dob: user.dob || "",
+            role: user.role || "user",
+            is_active: true, // Default to true since User interface doesn't have is_active
             images: user.images?.map((img) => img.image_url).join(', ') || ""
         })
         setIsDialogOpen(true)
@@ -109,6 +138,8 @@ export default function UsersPage() {
             password: "",
             full_name: "",
             dob: "",
+            role: "user",
+            is_active: true,
             images: ""
         })
         setIsDialogOpen(true)

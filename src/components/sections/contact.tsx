@@ -50,32 +50,39 @@ export function Contact() {
         }
 
         try {
-            // Send email using EmailJS
-            const result = await emailjs.send(
-                EMAILJS_CONFIG.serviceId,
-                EMAILJS_CONFIG.templateId,
-                {
-                    from_name: formData.name,
-                    from_email: formData.email,
+            // Perform both operations simultaneously
+            const results = await Promise.allSettled([
+                // 1️⃣ Send email using EmailJS
+                emailjs.send(
+                    EMAILJS_CONFIG.serviceId,
+                    EMAILJS_CONFIG.templateId,
+                    {
+                        from_name: formData.name,
+                        from_email: formData.email,
+                        phone: formData.phone,
+                        subject: formData.subject,
+                        message: formData.message,
+                        to_email: 'trantuandai2508@gmail.com'
+                    },
+                    EMAILJS_CONFIG.publicKey
+                ),
+                // 2️⃣ Save to database via backend API
+                api.submitContact({
+                    name: formData.name,
+                    email: formData.email,
                     phone: formData.phone,
                     subject: formData.subject,
-                    message: formData.message,
-                    to_email: 'trantuandai2508@gmail.com'
-                },
-                EMAILJS_CONFIG.publicKey
-            )
+                    message: formData.message
+                })
+            ])
 
-            // 2️⃣ Sau đó lưu vào backend
-            // await api.submitContact({
-            //     name: formData.name,
-            //     email: formData.email,
-            //     subject: formData.subject,
-            //     message: formData.message
-            // })
+            const [emailResult, dbResult] = results
+            
+            // Check if both operations succeeded
+            const emailSuccess = emailResult.status === 'fulfilled' && emailResult.value.status === 200
+            const dbSuccess = dbResult.status === 'fulfilled' && !dbResult.value.error
 
-
-
-            if (result.status === 200) {
+            if (emailSuccess && dbSuccess) {
                 setSubmitStatus({
                     type: 'success',
                     message: 'Cảm ơn bạn đã liên hệ! Tôi sẽ phản hồi sớm nhất có thể.'
@@ -88,11 +95,27 @@ export function Contact() {
                     subject: "",
                     message: ""
                 })
+            } else if (emailSuccess || dbSuccess) {
+                // Partial success
+                const successMsg = emailSuccess ? 'Email đã được gửi' : 'Thông tin đã được lưu'
+                const failMsg = !emailSuccess ? 'nhưng không gửi được email' : 'nhưng không lưu được vào hệ thống'
+                setSubmitStatus({
+                    type: 'success',
+                    message: `${successMsg}, ${failMsg}. Cảm ơn bạn đã liên hệ!`
+                })
+                // Reset form even on partial success
+                setFormData({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    subject: "",
+                    message: ""
+                })
             } else {
-                throw new Error('Failed to send email')
+                throw new Error('Both operations failed')
             }
         } catch (error) {
-            console.error('EmailJS Error:', error)
+            console.error('Contact Form Error:', error)
             setSubmitStatus({
                 type: 'error',
                 message: 'Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại sau.'

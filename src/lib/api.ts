@@ -4,6 +4,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://personal-websit
 export interface ContactFormData {
     name: string
     email: string
+    phone?: string
     subject: string
     message: string
 }
