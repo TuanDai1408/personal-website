@@ -209,18 +209,18 @@ export default function MediaPage() {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold tracking-tight text-white">Media Library</h2>
-                <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Media Library</h2>
+                <div className="flex flex-wrap gap-2 w-full sm:w-auto">
                     <Button
                         variant="outline"
-                        className="border-slate-700"
+                        className="border-slate-700 flex-1 sm:flex-none"
                         onClick={() => setNewFolderDialogOpen(true)}
                     >
                         <FolderPlus className="mr-2 h-4 w-4" /> New Folder
                     </Button>
                     <Button
-                        className="bg-indigo-600 hover:bg-indigo-700"
+                        className="bg-indigo-600 hover:bg-indigo-700 flex-1 sm:flex-none"
                         onClick={() => document.getElementById('file-upload')?.click()}
                         disabled={uploading}
                     >

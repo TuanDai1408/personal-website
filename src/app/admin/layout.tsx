@@ -62,10 +62,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 initial={false}
                 animate={{
                     width: isSidebarOpen ? 280 : 80,
-                    x: 0
                 }}
                 className={cn(
-                    "fixed md:static inset-y-0 left-0 z-40 flex flex-col border-r border-slate-800 bg-[#0F172A] transition-all duration-300",
+                    "fixed md:static inset-y-0 left-0 z-40 flex flex-col border-r border-slate-800 bg-[#0F172A] transition-transform duration-300 md:transition-none",
                     isMobileMenuOpen ? "translate-x-0 w-[280px]" : "-translate-x-full md:translate-x-0"
                 )}
             >
@@ -193,7 +192,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 p-4 md:p-6 overflow-y-auto overflow-x-hidden">
+                <main className="flex-1 p-3 sm:p-4 md:p-6 overflow-y-auto overflow-x-hidden">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={pathname}

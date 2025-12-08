@@ -31,7 +31,7 @@ export default function SettingsPage() {
             </div>
 
             <Tabs defaultValue="general" className="space-y-4">
-                <TabsList className="bg-slate-900/50 border border-slate-800 p-1">
+                <TabsList className="bg-slate-900/50 border border-slate-800 p-1 flex flex-wrap h-auto w-full sm:w-auto">
                     <TabsTrigger value="general" className="data-[state=active]:bg-indigo-600">
                         <User className="mr-2 h-4 w-4" /> General
                     </TabsTrigger>

@@ -50,13 +50,13 @@ export default function AdminDashboard() {
     }, [router])
 
     const handleDeleteContact = async (id: number) => {
-        if (!confirm("Bạn có chắc chắn muốn xóa liên hệ này?")) return
+        if (!confirm("Are you sure you want to delete this contact?")) return
 
         const { error } = await api.deleteAdminContact(id)
         if (error) {
-            toast.error("Xóa thất bại: " + error)
+            toast.error("Delete failed: " + error)
         } else {
-            toast.success("Đã xóa liên hệ")
+            toast.success("Contact deleted")
             setContacts(contacts.filter(c => c.id !== id))
         }
     }
@@ -74,7 +74,7 @@ export default function AdminDashboard() {
     return (
         <div className="space-y-8">
             {/* Summary Cards */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                 {[
                     { title: "Total Views", value: totalViews, icon: Eye, color: "text-blue-500", trend: "+12.5%" },
                     { title: "Active Users", value: "1,234", icon: Users, color: "text-purple-500", trend: "+5.2%" },
@@ -107,13 +107,13 @@ export default function AdminDashboard() {
             </div>
 
             {/* Charts Section */}
-            <div className="grid gap-6 md:grid-cols-7">
-                <Card className="col-span-4 bg-slate-900/50 border-slate-800">
+            <div className="grid gap-6 grid-cols-1 lg:grid-cols-7">
+                <Card className="lg:col-span-4 bg-slate-900/50 border-slate-800">
                     <CardHeader>
                         <CardTitle className="text-white">Traffic Overview</CardTitle>
                     </CardHeader>
                     <CardContent className="pl-2">
-                        <div className="h-[300px] w-full">
+                        <div className="h-[250px] sm:h-[300px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={stats}>
                                     <defs>
@@ -155,12 +155,12 @@ export default function AdminDashboard() {
                     </CardContent>
                 </Card>
 
-                <Card className="col-span-3 bg-slate-900/50 border-slate-800">
+                <Card className="lg:col-span-3 bg-slate-900/50 border-slate-800">
                     <CardHeader>
                         <CardTitle className="text-white">User Growth</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[300px] w-full">
+                        <div className="h-[250px] sm:h-[300px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={stats}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
@@ -182,45 +182,79 @@ export default function AdminDashboard() {
                 <CardHeader>
                     <CardTitle className="text-white">Recent Messages</CardTitle>
                 </CardHeader>
-                <CardContent>
-                    <Table>
-                        <TableHeader>
-                            <TableRow className="border-slate-800 hover:bg-slate-800/50">
-                                <TableHead className="text-slate-400">Name</TableHead>
-                                <TableHead className="text-slate-400">Email</TableHead>
-                                <TableHead className="text-slate-400">Subject</TableHead>
-                                <TableHead className="text-slate-400">Date</TableHead>
-                                <TableHead className="text-right text-slate-400">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {contacts.map((contact) => (
-                                <TableRow key={contact.id} className="border-slate-800 hover:bg-slate-800/50 transition-colors">
-                                    <TableCell className="font-medium text-slate-200">{contact.name}</TableCell>
-                                    <TableCell className="text-slate-400">{contact.email}</TableCell>
-                                    <TableCell className="text-slate-400">{contact.subject}</TableCell>
-                                    <TableCell className="text-slate-400">{new Date(contact.created_at).toLocaleDateString()}</TableCell>
-                                    <TableCell className="text-right">
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => handleDeleteContact(contact.id)}
-                                            className="text-slate-500 hover:text-red-500 hover:bg-red-500/10"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </TableCell>
+                <CardContent className="p-0 sm:p-6">
+                    {/* Desktop Table */}
+                    <div className="hidden md:block overflow-x-auto">
+                        <Table>
+                            <TableHeader>
+                                <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                                    <TableHead className="text-slate-400">Name</TableHead>
+                                    <TableHead className="text-slate-400">Email</TableHead>
+                                    <TableHead className="text-slate-400">Subject</TableHead>
+                                    <TableHead className="text-slate-400">Date</TableHead>
+                                    <TableHead className="text-right text-slate-400">Actions</TableHead>
                                 </TableRow>
-                            ))}
-                            {contacts.length === 0 && (
-                                <TableRow>
-                                    <TableCell colSpan={5} className="text-center text-slate-500 py-8">
-                                        No messages found
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {contacts.map((contact) => (
+                                    <TableRow key={contact.id} className="border-slate-800 hover:bg-slate-800/50 transition-colors">
+                                        <TableCell className="font-medium text-slate-200">{contact.name}</TableCell>
+                                        <TableCell className="text-slate-400">{contact.email}</TableCell>
+                                        <TableCell className="text-slate-400">{contact.subject}</TableCell>
+                                        <TableCell className="text-slate-400">{new Date(contact.created_at).toLocaleDateString()}</TableCell>
+                                        <TableCell className="text-right">
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() => handleDeleteContact(contact.id)}
+                                                className="text-slate-500 hover:text-red-500 hover:bg-red-500/10"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                                {contacts.length === 0 && (
+                                    <TableRow>
+                                        <TableCell colSpan={5} className="text-center text-slate-500 py-8">
+                                            No messages found
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </div>
+
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-4 p-4">
+                        {contacts.map((contact) => (
+                            <div key={contact.id} className="bg-slate-800/50 rounded-lg p-4 space-y-3 border border-slate-700">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h4 className="font-medium text-slate-200">{contact.name}</h4>
+                                        <p className="text-sm text-slate-400">{contact.email}</p>
+                                    </div>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => handleDeleteContact(contact.id)}
+                                        className="text-slate-500 hover:text-red-500 hover:bg-red-500/10 -mt-2 -mr-2"
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-slate-300 line-clamp-2">{contact.subject}</p>
+                                    <p className="text-xs text-slate-500 mt-2">{new Date(contact.created_at).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                        ))}
+                        {contacts.length === 0 && (
+                            <div className="text-center text-slate-500 py-8">
+                                No messages found
+                            </div>
+                        )}
+                    </div>
                 </CardContent>
             </Card>
         </div>

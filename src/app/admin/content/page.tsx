@@ -59,9 +59,9 @@ export default function ContentPage() {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold tracking-tight text-white">Content Management</h2>
-                <Button className="bg-indigo-600 hover:bg-indigo-700">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Content Management</h2>
+                <Button className="bg-indigo-600 hover:bg-indigo-700 w-full sm:w-auto">
                     <Plus className="mr-2 h-4 w-4" /> Create New
                 </Button>
             </div>
@@ -91,57 +91,59 @@ export default function ContentPage() {
                 <TabsContent value="posts">
                     <Card className="bg-slate-900/50 border-slate-800">
                         <CardContent className="p-0">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow className="border-slate-800 hover:bg-slate-800/50">
-                                        <TableHead className="text-slate-400">Title</TableHead>
-                                        <TableHead className="text-slate-400">Status</TableHead>
-                                        <TableHead className="text-slate-400">Views</TableHead>
-                                        <TableHead className="text-slate-400">Date</TableHead>
-                                        <TableHead className="text-right text-slate-400">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {filteredPosts.map((post) => (
-                                        <TableRow key={post.id} className="border-slate-800 hover:bg-slate-800/50">
-                                            <TableCell className="font-medium text-slate-200">{post.title}</TableCell>
-                                            <TableCell>
-                                                <span className={`px-2 py-1 rounded-full text-xs ${post.status === 'published' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-yellow-500/10 text-yellow-500'
-                                                    }`}>
-                                                    {post.status}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell className="text-slate-400">{post.views}</TableCell>
-                                            <TableCell className="text-slate-400">{new Date(post.created_at).toLocaleDateString()}</TableCell>
-                                            <TableCell className="text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                                                        <Eye className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-indigo-400">
-                                                        <Edit className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="text-slate-400 hover:text-red-400"
-                                                        onClick={() => handleDelete('post', post.id)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </TableCell>
+                            <div className="overflow-x-auto">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                                            <TableHead className="text-slate-400">Title</TableHead>
+                                            <TableHead className="text-slate-400">Status</TableHead>
+                                            <TableHead className="text-slate-400">Views</TableHead>
+                                            <TableHead className="text-slate-400">Date</TableHead>
+                                            <TableHead className="text-right text-slate-400">Actions</TableHead>
                                         </TableRow>
-                                    ))}
-                                    {filteredPosts.length === 0 && (
-                                        <TableRow>
-                                            <TableCell colSpan={5} className="text-center text-slate-500 py-8">
-                                                No posts found
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredPosts.map((post) => (
+                                            <TableRow key={post.id} className="border-slate-800 hover:bg-slate-800/50">
+                                                <TableCell className="font-medium text-slate-200">{post.title}</TableCell>
+                                                <TableCell>
+                                                    <span className={`px-2 py-1 rounded-full text-xs ${post.status === 'published' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-yellow-500/10 text-yellow-500'
+                                                        }`}>
+                                                        {post.status}
+                                                    </span>
+                                                </TableCell>
+                                                <TableCell className="text-slate-400">{post.views}</TableCell>
+                                                <TableCell className="text-slate-400">{new Date(post.created_at).toLocaleDateString()}</TableCell>
+                                                <TableCell className="text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
+                                                            <Eye className="h-4 w-4" />
+                                                        </Button>
+                                                        <Button variant="ghost" size="icon" className="text-slate-400 hover:text-indigo-400">
+                                                            <Edit className="h-4 w-4" />
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="icon"
+                                                            className="text-slate-400 hover:text-red-400"
+                                                            onClick={() => handleDelete('post', post.id)}
+                                                        >
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
+                                                    </div>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                        {filteredPosts.length === 0 && (
+                                            <TableRow>
+                                                <TableCell colSpan={5} className="text-center text-slate-500 py-8">
+                                                    No posts found
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -149,55 +151,57 @@ export default function ContentPage() {
                 <TabsContent value="projects">
                     <Card className="bg-slate-900/50 border-slate-800">
                         <CardContent className="p-0">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow className="border-slate-800 hover:bg-slate-800/50">
-                                        <TableHead className="text-slate-400">Title</TableHead>
-                                        <TableHead className="text-slate-400">Status</TableHead>
-                                        <TableHead className="text-slate-400">Date</TableHead>
-                                        <TableHead className="text-right text-slate-400">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {filteredProjects.map((project) => (
-                                        <TableRow key={project.id} className="border-slate-800 hover:bg-slate-800/50">
-                                            <TableCell className="font-medium text-slate-200">{project.title}</TableCell>
-                                            <TableCell>
-                                                <span className={`px-2 py-1 rounded-full text-xs ${project.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-blue-500/10 text-blue-500'
-                                                    }`}>
-                                                    {project.status}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell className="text-slate-400">{new Date(project.created_at).toLocaleDateString()}</TableCell>
-                                            <TableCell className="text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                                                        <Eye className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-indigo-400">
-                                                        <Edit className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="text-slate-400 hover:text-red-400"
-                                                        onClick={() => handleDelete('project', project.id)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </TableCell>
+                            <div className="overflow-x-auto">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow className="border-slate-800 hover:bg-slate-800/50">
+                                            <TableHead className="text-slate-400">Title</TableHead>
+                                            <TableHead className="text-slate-400">Status</TableHead>
+                                            <TableHead className="text-slate-400">Date</TableHead>
+                                            <TableHead className="text-right text-slate-400">Actions</TableHead>
                                         </TableRow>
-                                    ))}
-                                    {filteredProjects.length === 0 && (
-                                        <TableRow>
-                                            <TableCell colSpan={4} className="text-center text-slate-500 py-8">
-                                                No projects found
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredProjects.map((project) => (
+                                            <TableRow key={project.id} className="border-slate-800 hover:bg-slate-800/50">
+                                                <TableCell className="font-medium text-slate-200">{project.title}</TableCell>
+                                                <TableCell>
+                                                    <span className={`px-2 py-1 rounded-full text-xs ${project.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-blue-500/10 text-blue-500'
+                                                        }`}>
+                                                        {project.status}
+                                                    </span>
+                                                </TableCell>
+                                                <TableCell className="text-slate-400">{new Date(project.created_at).toLocaleDateString()}</TableCell>
+                                                <TableCell className="text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
+                                                            <Eye className="h-4 w-4" />
+                                                        </Button>
+                                                        <Button variant="ghost" size="icon" className="text-slate-400 hover:text-indigo-400">
+                                                            <Edit className="h-4 w-4" />
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="icon"
+                                                            className="text-slate-400 hover:text-red-400"
+                                                            onClick={() => handleDelete('project', project.id)}
+                                                        >
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
+                                                    </div>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                        {filteredProjects.length === 0 && (
+                                            <TableRow>
+                                                <TableCell colSpan={4} className="text-center text-slate-500 py-8">
+                                                    No projects found
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </CardContent>
                     </Card>
                 </TabsContent>

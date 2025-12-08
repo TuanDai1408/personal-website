@@ -133,65 +133,76 @@ export function Projects() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm"
                             onClick={() => setSelectedProject(null)}
                         >
                             <motion.div
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.9, opacity: 0 }}
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bg-background border border-white/10 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl"
+                                className="bg-background border border-white/10 rounded-xl md:rounded-2xl w-full max-w-[95vw] md:max-w-3xl max-h-[90vh] md:max-h-[85vh] overflow-y-auto relative shadow-2xl flex flex-col"
                             >
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="absolute right-4 top-4 z-10"
+                                    className="absolute right-2 top-2 sm:right-4 sm:top-4 z-20 bg-black/40 hover:bg-black/60 text-white rounded-full h-8 w-8 sm:h-10 sm:w-10 backdrop-blur-md"
                                     onClick={() => setSelectedProject(null)}
                                 >
-                                    <X className="h-6 w-6" />
+                                    <X className="h-4 w-4 sm:h-5 sm:w-5" />
                                 </Button>
 
-                                <div className={`h-64 w-full ${selectedProject.image} relative`}>
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <h3 className="text-4xl font-bold text-white shadow-black drop-shadow-lg">{selectedProject.title}</h3>
+                                <div className={`h-48 sm:h-64 w-full ${selectedProject.image} relative shrink-0`}>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
+                                    <div className="absolute inset-0 flex items-end sm:items-center justify-start sm:justify-center p-4 sm:p-0">
+                                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white shadow-black drop-shadow-lg leading-tight">
+                                            {selectedProject.title}
+                                        </h3>
                                     </div>
                                 </div>
 
-                                <div className="p-8 space-y-8">
-                                    <div className="grid md:grid-cols-2 gap-8">
+                                <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 overflow-y-auto">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
                                         <div>
-                                            <h4 className="text-lg font-bold text-neon-blue mb-2">Mục tiêu</h4>
-                                            <p className="text-muted-foreground">{selectedProject.details.goal}</p>
+                                            <h4 className="text-base sm:text-lg font-bold text-neon-blue mb-2 flex items-center gap-2">
+                                                Mục tiêu
+                                            </h4>
+                                            <p className="text-sm sm:text-base text-muted-foreground">{selectedProject.details.goal}</p>
                                         </div>
                                         <div>
-                                            <h4 className="text-lg font-bold text-neon-purple mb-2">Vấn đề</h4>
-                                            <p className="text-muted-foreground">{selectedProject.details.problem}</p>
+                                            <h4 className="text-base sm:text-lg font-bold text-neon-purple mb-2">Vấn đề</h4>
+                                            <p className="text-sm sm:text-base text-muted-foreground">{selectedProject.details.problem}</p>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <h4 className="text-lg font-bold text-white mb-2">Giải pháp</h4>
-                                        <p className="text-muted-foreground">{selectedProject.details.solution}</p>
+                                        <h4 className="text-base sm:text-lg font-bold text-white mb-2">Giải pháp</h4>
+                                        <p className="text-sm sm:text-base text-muted-foreground">{selectedProject.details.solution}</p>
                                     </div>
 
-                                    <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
                                         <div>
-                                            <h4 className="text-lg font-bold text-white mb-2">Công nghệ</h4>
-                                            <p className="text-muted-foreground">{selectedProject.details.tech}</p>
+                                            <h4 className="text-base sm:text-lg font-bold text-white mb-2">Công nghệ</h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {selectedProject.details.tech.split(', ').map((tech, idx) => (
+                                                    <Badge key={idx} variant="outline" className="text-xs sm:text-sm border-white/20">
+                                                        {tech}
+                                                    </Badge>
+                                                ))}
+                                            </div>
                                         </div>
                                         <div>
-                                            <h4 className="text-lg font-bold text-white mb-2">Kết quả</h4>
-                                            <p className="text-muted-foreground">{selectedProject.details.result}</p>
+                                            <h4 className="text-base sm:text-lg font-bold text-white mb-2">Kết quả</h4>
+                                            <p className="text-sm sm:text-base text-muted-foreground">{selectedProject.details.result}</p>
                                         </div>
                                     </div>
 
-                                    <div className="flex gap-4 pt-4 border-t border-white/10">
-                                        <Button className="bg-neon-blue hover:bg-neon-blue/80 text-black">
+                                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 border-t border-white/10 mt-auto">
+                                        <Button className="w-full sm:w-auto bg-neon-blue hover:bg-neon-blue/80 text-black font-semibold h-11 sm:h-10">
                                             <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
                                         </Button>
-                                        <a href="https://github.com/TuanDai1408/lc_coding_challenge_daitt5">
-                                            <Button variant="outline">
+                                        <a href="https://github.com/TuanDai1408/lc_coding_challenge_daitt5" className="w-full sm:w-auto">
+                                            <Button variant="outline" className="w-full sm:w-auto h-11 sm:h-10 border-white/20 hover:bg-white/5">
                                                 <Github className="mr-2 h-4 w-4" /> Source Code
                                             </Button>
                                         </a>

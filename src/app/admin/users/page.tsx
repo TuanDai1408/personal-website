@@ -177,9 +177,9 @@ export default function UsersPage() {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold tracking-tight text-white">User Management</h2>
-                <Button className="bg-indigo-600 hover:bg-indigo-700" onClick={openCreate}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">User Management</h2>
+                <Button className="bg-indigo-600 hover:bg-indigo-700 w-full sm:w-auto" onClick={openCreate}>
                     <Plus className="mr-2 h-4 w-4" /> Add User
                 </Button>
             </div>
@@ -198,7 +198,8 @@ export default function UsersPage() {
 
             <Card className="bg-slate-900/50 border-slate-800">
                 <CardContent className="p-0">
-                    <div className="overflow-x-auto">
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block overflow-x-auto">
                         <Table>
                             <TableHeader>
                                 <TableRow className="border-slate-800 hover:bg-slate-800/50">
@@ -259,6 +260,63 @@ export default function UsersPage() {
                             </TableBody>
                         </Table>
                     </div>
+
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-4 p-4">
+                        {filteredUsers.map((user) => (
+                            <div key={user.id} className="bg-slate-800/50 rounded-lg p-4 border border-slate-700 space-y-4">
+                                <div className="flex items-start justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="h-10 w-10">
+                                            <AvatarImage src={user.images?.[0]?.image_url || `https://avatar.vercel.sh/${user.username}`} />
+                                            <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <p className="font-medium text-slate-200">{user.username}</p>
+                                            <p className="text-xs text-slate-500">{user.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-1 bg-slate-900/50 px-2 py-1 rounded text-xs border border-slate-700">
+                                        {user.role === 'admin' ? <Shield className="h-3 w-3 text-indigo-400" /> : <UserIcon className="h-3 w-3 text-slate-400" />}
+                                        <span className="text-slate-300 capitalize">{user.role}</span>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p className="text-slate-500 text-xs mb-1">Full Name</p>
+                                        <p className="text-slate-300">{user.full_name || "-"}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-slate-500 text-xs mb-1">Birthday</p>
+                                        <p className="text-slate-300 flex items-center gap-1">
+                                            {user.dob ? (
+                                                <>
+                                                    <Calendar className="h-3 w-3 text-slate-400" />
+                                                    {new Date(user.dob).toLocaleDateString()}
+                                                </>
+                                            ) : "-"}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end gap-2 pt-2 border-t border-slate-700/50">
+                                    <Button variant="ghost" size="sm" className="text-slate-400 hover:text-indigo-400 w-full" onClick={() => openEdit(user)}>
+                                        <Edit className="h-4 w-4 mr-2" /> Edit
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="text-slate-400 hover:text-red-400 w-full"
+                                        onClick={() => openDeleteConfirm(user.id)}
+                                    >
+                                        <Trash2 className="h-4 w-4 mr-2" /> Delete
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
                     {loading && (
                         <div className="p-8 space-y-4">
                             {[1, 2, 3].map((i) => (

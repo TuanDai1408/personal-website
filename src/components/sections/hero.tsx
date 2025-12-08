@@ -121,9 +121,9 @@ export function Hero() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative hidden lg:block"
+                    className="relative block mt-12 lg:mt-0"
                 >
-                    <div className="relative w-[500px] h-[600px] mx-auto">
+                    <div className="relative w-[300px] h-[360px] md:w-[400px] md:h-[480px] lg:w-[500px] lg:h-[600px] mx-auto">
                         <div className="absolute inset-0 bg-gradient-to-tr from-neon-purple to-neon-blue rounded-[2rem] rotate-6 opacity-20 blur-lg" />
                         <div className="absolute inset-0 bg-card/50 backdrop-blur-xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
                             <Image
