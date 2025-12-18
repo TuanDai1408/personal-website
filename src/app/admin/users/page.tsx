@@ -175,6 +175,18 @@ export default function UsersPage() {
         (u.full_name && u.full_name.toLowerCase().includes(searchTerm.toLowerCase()))
     )
 
+    if (loading) {
+        return (
+            <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] space-y-4">
+                <div className="relative">
+                    <div className="h-16 w-16 rounded-full border-4 border-slate-700 border-t-indigo-500 animate-spin"></div>
+                    <div className="absolute inset-0 h-16 w-16 rounded-full border-4 border-transparent border-t-purple-500 animate-spin" style={{ animationDuration: '1.5s' }}></div>
+                </div>
+                <p className="text-slate-400 text-sm animate-pulse">Đang tải dữ liệu...</p>
+            </div>
+        )
+    }
+
     return (
         <div className="space-y-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -316,20 +328,6 @@ export default function UsersPage() {
                             </div>
                         ))}
                     </div>
-
-                    {loading && (
-                        <div className="p-8 space-y-4">
-                            {[1, 2, 3].map((i) => (
-                                <div key={i} className="flex items-center gap-4 animate-pulse">
-                                    <div className="h-10 w-10 bg-slate-800 rounded-full"></div>
-                                    <div className="flex-1 space-y-2">
-                                        <div className="h-4 bg-slate-800 rounded w-1/4"></div>
-                                        <div className="h-3 bg-slate-800 rounded w-1/3"></div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </CardContent>
             </Card>
 
