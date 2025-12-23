@@ -8,6 +8,9 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Tran Tuan Dai | Data Management & AI Automator",
   description: "Portfolio of Tran Tuan Dai - Data Engineer, Marketing Analyst, and AI Automator.",
+  verification: {
+    google: "bpnIgq5WdHZqK0kyKylx_wieu5Aqwm7zrIGuStw9iwg",
+  },
 };
 
 export default function RootLayout({
